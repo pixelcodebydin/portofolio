@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Times New Roman', Times, serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1 { font-family: 'Times New Roman', Times, serif; }
+h2 { font-family: 'Times New Roman', Times, serif; }
+h3 { font-family: 'Times New Roman', Times, serif; }
+h4 { font-family: 'Times New Roman', Times, serif; }
+h5 { font-family: 'Times New Roman', Times, serif; }
+h6 { font-family: 'Times New Roman', Times, serif; }
+p { font-family: 'Lato', Times, serif; text-align: justify; }
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}

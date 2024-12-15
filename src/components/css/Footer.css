@@ -1,0 +1,17 @@
+footer {
+    background: #F7F7F7;
+}
+
+#footer {
+    text-align: center;
+}
+
+#footer p { 
+    text-align: center;
+    color: #AFAFAF;
+}
+
+#logo-footer {
+    text-align: center;
+    width: 45px;
+}

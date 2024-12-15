@@ -1,0 +1,38 @@
+#img {
+    width: 100%;
+    border-radius: 1.5rem;
+    height: 100%;
+}
+  
+#about {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.social-links a {
+    text-decoration: none;
+    transition: transform 0.2s ease;
+    font-size: 1.25rem;
+}
+
+.social-links a:hover {
+    transform: scale(1.1);
+}
+
+#learn-more {
+    border: 1px solid #FF8500;
+    color: #FF8500;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1.5rem;
+    text-decoration: none;
+}
+
+#learn-more:hover {
+    background: #FF8500;
+    color: white;
+}
+
+#line {
+    border: 1px solid #DFDFDF;
+}

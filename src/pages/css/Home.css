@@ -19,20 +19,3 @@
 .social-links a:hover {
     transform: scale(1.1);
 }
-
-#learn-more {
-    border: 1px solid #FF8500;
-    color: #FF8500;
-    border-radius: 0.5rem;
-    padding: 0.5rem 1.5rem;
-    text-decoration: none;
-}
-
-#learn-more:hover {
-    background: #FF8500;
-    color: white;
-}
-
-#line {
-    border: 1px solid #DFDFDF;
-}

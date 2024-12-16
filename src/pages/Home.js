@@ -59,9 +59,9 @@ function Home() {
 
                 <div className="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-xs-12">
                     <p className="mb-4">
-                    I possess a strong skill set in graphic design, with experience in creating a wide range of visual content, including banners, logos, Instagram posts, and more. My expertise allows me to craft engaging and professional designs tailored to various needs, ensuring each project meets high standards of creativity and effectiveness.
+                        With expertise in graphic design, I offer a wide range of creative services tailored to meet diverse needs. From crafting unique logo designs that reflect your brand identity to producing engaging social media visuals, I ensure every detail communicates effectively. My portfolio also includes professional stationery, custom twibbons, and versatile design solutions for various purposes. Combining artistic vision with a deep understanding of design principles, I deliver high-quality work that resonates with your audience and elevates your brand presence.
                     </p>
-                    <Link to={'/graphic-design'}><button className="btn" id="learn-more">Learn more →</button></Link>
+                    <Link to={'/graphic-design'}><button className="btn" id="button">Learn more →</button></Link>
                 </div>
             </div>
 
@@ -74,9 +74,9 @@ function Home() {
 
                 <div className="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-xs-12">
                     <p className="mb-4">
-                        I specialize in illustration, with a strong background in creating vector art, mascots, and various other types of illustrations. My skills in this area enable me to produce detailed and visually appealing artwork tailored to diverse needs, from branding and character design to custom graphics. My experience ensures that each piece not only meets but exceeds expectations, blending creativity with precision to deliver impactful visual solutions.
+                        As a versatile illustrator, I bring ideas to life through various styles, including detailed vector art, sleek minimalist avatars, and engaging storyboards. My expertise extends to creating microstock assets for commercial use and custom illustrations tailored to individual projects. With a focus on clarity, creativity, and attention to detail, I strive to craft visuals that resonate with diverse audiences and serve as powerful tools for storytelling and branding.
                     </p>
-                    <Link to={'/illustration'}><button className="btn" id="learn-more">Learn more →</button></Link>
+                    <Link to={'/illustration'}><button className="btn" id="button">Learn more →</button></Link>
                 </div>
             </div>
 
@@ -89,12 +89,12 @@ function Home() {
 
                 <div className="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-xs-12">
                     <p className="mb-4">
-                        With a strong background in UI/UX design, I have successfully completed a range of projects that showcase my expertise in both web and mobile app design. My skills include creating user-friendly interfaces, designing intuitive user experiences, and ensuring visual consistency across different platforms. My portfolio highlights a variety of completed projects that demonstrate my ability to craft engaging and effective design solutions.
+                        As a skilled UI/UX designer, I specialize in crafting intuitive and visually appealing designs for both mobile apps and websites. With a strong focus on user-centric principles, I ensure every design not only looks stunning but also provides seamless navigation and functionality. My expertise lies in wireframing, prototyping, and utilizing modern design tools to bring concepts to life. From creating responsive websites to enhancing app interfaces, I deliver designs that prioritize usability and elevate the overall user experience.
                     </p>
-                    <Link to={'/ui-ux-design'}><button className="btn" id="learn-more">Learn more →</button></Link>
+                    <Link to={'/ui-ux-design'}><button className="btn" id="button">Learn more →</button></Link>
                 </div>
             </div>
-            
+
             <hr id="line"></hr>
 
             <div className="row py-5">
@@ -104,12 +104,12 @@ function Home() {
 
                 <div className="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-xs-12">
                     <p className="mb-4">
-                        My photography skills are honed through extensive experience with camera work, capturing memorable moments and documenting events. I am proficient in using various types of cameras to deliver high-quality images that effectively convey the essence of each occasion.
+                        Photography is more than just taking pictures. It’s about preserving emotions, stories, and memories through the lens. With expertise in event documentation and creative compositions, I excel at capturing the essence of each moment. My work combines technical proficiency with a keen eye for detail, ensuring that every shot is visually striking and emotionally engaging.
                     </p>
-                    <Link to={'/photography'}><button className="btn" id="learn-more">Learn more →</button></Link>
+                    <Link to={'/photography'}><button className="btn" id="button">Learn more →</button></Link>
                 </div>
             </div>
-            
+
             <hr id="line"></hr>
 
             <div className="row py-5">
@@ -119,9 +119,9 @@ function Home() {
 
                 <div className="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-xs-12">
                     <p className="mb-4">
-                        With a strong foundation in web development, I possess skills in various technologies including HTML, CSS, JavaScript, PHP, and CodeIgniter. My experience spans multiple successful projects, from creating modern and user-friendly websites to developing complex web applications. Each project has refined my technical expertise and problem-solving abilities, allowing me to deliver high-quality solutions tailored to client needs.
+                        With extensive experience in web development, I excel at building dynamic and robust web applications using PHP, MySQL, and the CodeIgniter framework. I focus on creating efficient back-end systems, integrating databases for optimized performance, and ensuring secure and scalable solutions. My development approach prioritizes clean coding practices and user-friendly designs, delivering professional results tailored to client needs.
                     </p>
-                    <Link to={'/web-development'}><button className="btn" id="learn-more">Learn more →</button></Link>
+                    <Link to={'/web-development'}><button className="btn" id="button">Learn more →</button></Link>
                 </div>
             </div>
         </div>

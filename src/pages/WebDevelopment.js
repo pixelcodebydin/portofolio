@@ -7,13 +7,14 @@ function WebDevelopment() {
 
     return (
         <div className="container px-5">
-            <h1>Web Developer</h1>
-            <p>I am a web developer with experience in React and modern web technologies.</p>
-            <ul>
-                <li>Project 1: Paham Hukum</li>
-                <li>Project 2: Almanak HKBP</li>
-                <li>Project 3: Dashboard of PED division (PT. Telkom Indonesia TBH)</li>
-            </ul>
+            <div className="py-5">
+                <h1 className="text-center pt-5">Web Development</h1>
+                <p className="text-center pb-5">
+                    I specialize in web development using PHP, MySQL, and CodeIgniter, crafting scalable and efficient web solutions. My expertise ensures seamless back-end functionality and user-friendly interfaces for any project.
+                </p>
+            </div>
+
+
         </div>
     );
 }

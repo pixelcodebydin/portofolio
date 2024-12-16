@@ -9,7 +9,7 @@ function UiuxDesign() {
         <div className="container px-5">
             <div className="py-5">
                 <h1 className="text-center pt-5">UI/UX Design</h1>
-                <p className="text-center pb-5">
+                <p className="text-center">
                     I specialize in creating intuitive and visually engaging UI/UX designs for both web and mobile applications. My focus is on crafting user-centered solutions that enhance usability while delivering modern, clean aesthetics.
                 </p>
             </div>

@@ -9,7 +9,7 @@ function Illustration() {
         <div className="container px-5">
             <div className="py-5">
                 <h1 className="text-center pt-5">Illustration</h1>
-                <p className="text-center pb-5">
+                <p className="text-center">
                     I specialize in diverse illustration styles, including vector art, minimalist avatars, microstock designs, and storyboards. My work combines creativity and precision to deliver visually compelling results that cater to various needs, from personal branding to commercial projects.
                 </p>
             </div>

@@ -1,10 +1,5 @@
 import React, { useEffect } from 'react';
-
-function Button() {
-    return (
-        <button className="btn" id="button">See more →</button>
-    );
-}
+import Button from '../components/Button';
 
 function WebDevelopment() {
     useEffect(() => {
@@ -14,9 +9,9 @@ function WebDevelopment() {
     return (
         <div className="container px-5">
             <div className="text-center py-5">
-                <h1 className="text-center pt-5">Web Development</h1>
+                <h1 className="text-center pt-3">Web Development</h1>
                 <p className="text-center">I specialize in web development using PHP, MySQL, and CodeIgniter, crafting scalable and efficient web solutions. My expertise ensures seamless back-end functionality and user-friendly interfaces for any project.</p>
-                <a href="https://github.com/pixelcodebydin/" target="_blank"><Button /></a>
+                <a href="https://github.com/pixelcodebydin/" target="_blank"><Button desc="See more →" id="button-1" /></a>
             </div>
 
             <hr id="line" className="mb-3"></hr>
@@ -25,7 +20,7 @@ function WebDevelopment() {
                 <div className="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-xs-12 mt-4" id="desc">
                     <h3>Paham Hukum</h3>
                     <p>Building and designing the personal website of Paham Hukum using PHP, MySQL, and CodeIgniter 3, that expected to provide more knowledge to the public and can become a media of communication between people who need legal consultation and legal experts.</p>
-                    <a href="https://pahamhukum.id/" target="_blank"><Button /></a>
+                    <a href="https://pahamhukum.id/" target="_blank"><Button desc="See more →" id="button-1" /></a>
                 </div>
 
                 <div className="col-xl-7 col-lg-7 col-md-12 col-sm-12 col-xs-12 mt-4">
@@ -63,7 +58,7 @@ function WebDevelopment() {
                 <div className="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-xs-12 mt-4" id="desc">
                     <h3>CV. Tamanta Indo Ekspor</h3>
                     <p>Building and designing the personal website of CV. Tamanta Indo Ekspor using PHP, MySQL, and CodeIgniter 3, that shows information about the company and services that offered by CV. Tamanta Indo Ekspor.</p>
-                    <a href="https://tamantaindoekspor.com/id/index.php" target="_blank"><Button /></a>
+                    <a href="https://tamantaindoekspor.com/id/index.php" target="_blank"><Button desc="See more →" id="button-1" /></a>
                 </div>
 
                 <div className="col-xl-7 col-lg-7 col-md-12 col-sm-12 col-xs-12 mt-4">

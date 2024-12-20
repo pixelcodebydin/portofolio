@@ -15,6 +15,22 @@ nav ul li a {
     color: #AFAFAF;
 }
 
+nav ul li a:hover{
+    color: black;
+}
+
 nav ul li.active a {
     color: black;
+}
+
+.logout-item {
+    text-decoration: none;
+    cursor: pointer;
+    color: #AFAFAF;
+    position: absolute;
+    right: 0;
+}
+
+.logout-item:hover {
+    color: rgb(214, 50, 50);
 }

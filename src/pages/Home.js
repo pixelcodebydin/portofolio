@@ -4,12 +4,7 @@ import './css/Home.css';
 import image from '../assets/image.jpg';
 import freepik from '../assets/freepik.png';
 import shutterstock from '../assets/shutterstock.png';
-
-function Button() {
-    return (
-        <button className="btn" id="button">Learn more →</button>
-    );
-}
+import Button from '../components/Button';
 
 function Home() {
     useEffect(() => {
@@ -67,7 +62,7 @@ function Home() {
                     <p className="mb-4">
                         With expertise in graphic design, I offer a wide range of creative services tailored to meet diverse needs. From crafting unique logo designs that reflect your brand identity to producing engaging social media visuals, I ensure every detail communicates effectively. My portfolio also includes professional stationery, custom twibbons, and versatile design solutions for various purposes. Combining artistic vision with a deep understanding of design principles, I deliver high-quality work that resonates with your audience and elevates your brand presence.
                     </p>
-                    <Link to={'/graphic-design'}><Button /></Link>
+                    <Link to={'/graphic-design'}><Button desc="Learn more →" id="button-1" /></Link>
                 </div>
             </div>
 
@@ -82,7 +77,7 @@ function Home() {
                     <p className="mb-4">
                         As a versatile illustrator, I bring ideas to life through various styles, including detailed vector art, sleek minimalist avatars, and engaging storyboards. My expertise extends to creating microstock assets for commercial use and custom illustrations tailored to individual projects. With a focus on clarity, creativity, and attention to detail, I strive to craft visuals that resonate with diverse audiences and serve as powerful tools for storytelling and branding.
                     </p>
-                    <Link to={'/illustration'}><Button /></Link>
+                    <Link to={'/illustration'}><Button desc="Learn more →" id="button-1" /></Link>
                 </div>
             </div>
 
@@ -97,7 +92,7 @@ function Home() {
                     <p className="mb-4">
                         As a skilled UI/UX designer, I specialize in crafting intuitive and visually appealing designs for both mobile apps and websites. With a strong focus on user-centric principles, I ensure every design not only looks stunning but also provides seamless navigation and functionality. My expertise lies in wireframing, prototyping, and utilizing modern design tools to bring concepts to life. From creating responsive websites to enhancing app interfaces, I deliver designs that prioritize usability and elevate the overall user experience.
                     </p>
-                    <Link to={'/ui-ux-design'}><Button /></Link>
+                    <Link to={'/ui-ux-design'}><Button desc="Learn more →" id="button-1" /></Link>
                 </div>
             </div>
 
@@ -112,7 +107,7 @@ function Home() {
                     <p className="mb-4">
                         Photography is more than just taking pictures. It’s about preserving emotions, stories, and memories through the lens. With expertise in event documentation and creative compositions, I excel at capturing the essence of each moment. My work combines technical proficiency with a keen eye for detail, ensuring that every shot is visually striking and emotionally engaging.
                     </p>
-                    <Link to={'/photography'}><Button /></Link>
+                    <Link to={'/photography'}><Button desc="Learn more →" id="button-1" /></Link>
                 </div>
             </div>
 
@@ -127,7 +122,7 @@ function Home() {
                     <p className="mb-4">
                         With extensive experience in web development, I excel at building dynamic and robust web applications using PHP, MySQL, and the CodeIgniter framework. I focus on creating efficient back-end systems, integrating databases for optimized performance, and ensuring secure and scalable solutions. My development approach prioritizes clean coding practices and user-friendly designs, delivering professional results tailored to client needs.
                     </p>
-                    <Link to={'/web-development'}><Button /></Link>
+                    <Link to={'/web-development'}><Button desc="Learn more →" id="button-1" /></Link>
                 </div>
             </div>
         </div>

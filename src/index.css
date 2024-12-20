@@ -1,8 +1,36 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #D9D9D9;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #FF8500, #FFAE00);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #FFAE00, #FF8500);
+  cursor: pointer;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: #0E5E8E;
+}
+
+::-webkit-scrollbar-track:horizontal {
+  background: #D9D9D9;
+}
+
 body {
   margin: 0;
-  font-family: 'Times New Roman', Times, serif;
+  font-family: 'Lato', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -13,24 +41,11 @@ h3 { font-family: 'Times New Roman', Times, serif; }
 h4 { font-family: 'Times New Roman', Times, serif; }
 h5 { font-family: 'Times New Roman', Times, serif; }
 h6 { font-family: 'Times New Roman', Times, serif; }
-p { font-family: 'Lato', Times, serif; text-align: justify; color: gray }
+p { font-family: 'Lato', sans-serif; text-align: justify; color: gray }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-}
-
-#button {
-  border: 1px solid #FF8500;
-  color: #FF8500;
-  border-radius: 0.5rem;
-  padding: 0.5rem 1.5rem;
-  text-decoration: none;
-}
-
-#button:hover {
-  background: #FF8500;
-  color: white;
 }
 
 #line {

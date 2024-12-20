@@ -1,0 +1,22 @@
+#button-1, #button-2 {
+    max-width: 100%;
+    text-decoration: none;
+    padding: 0.5rem 1.5rem;
+    border-radius: 0.5rem;
+}
+
+#button-1 {
+    border: 1px solid #FF8500;
+    color: #FF8500;
+}
+
+#button-1:hover {
+    background: linear-gradient(to right, #FF8500, #FFAE00);
+    color: white;
+}
+
+#button-2 {
+    color: white;
+    background: linear-gradient(to left, #FFAE00, #FF9E36);
+    width: 100%;
+}

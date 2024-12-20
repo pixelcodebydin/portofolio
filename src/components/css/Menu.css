@@ -1,0 +1,15 @@
+#card {
+    color: white;
+    background: #FF8500;
+    height: 100%;
+}
+
+#card a {
+    text-decoration: none !important;
+    color: inherit;
+}
+
+#sum {
+    color: white;
+    text-align: left;
+}

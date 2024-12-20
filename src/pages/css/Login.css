@@ -1,0 +1,17 @@
+#form{ 
+    width: 100%;
+    display: table-cell; 
+    vertical-align: middle;
+}
+
+.card{ 
+    padding: 30px; 
+    background: rgba(0, 0, 0, 0.4); 
+    width: 100%; 
+    border-radius: 5px; 
+    color: white;
+}
+
+input{
+    background: none;
+}

@@ -1,10 +1,18 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../assets/Logo.png';
 import './css/Navbar.css';
 
 function Navbar() {
     const location = useLocation();
+    const navigate = useNavigate();
+    const isLogin = localStorage.getItem('isLogin');
+
+    function handleLogout() {
+        localStorage.removeItem('isLogin');
+        navigate('/login');
+    }
+
     return (
         <nav className="navbar navbar-expand-lg navbar-light container px-5 py-3">
             <img src={logo} alt="Logo" />
@@ -20,6 +28,7 @@ function Navbar() {
                     <li className={location.pathname === "/ui-ux-design" ? "active" : ""}><Link to="/ui-ux-design">UI/UX Design</Link></li>
                     <li className={location.pathname === "/photography" ? "active" : ""}><Link to="/photography">Photography</Link></li>
                     <li className={location.pathname === "/web-development" ? "active" : ""}><Link to="/web-development">Web Development</Link></li>
+                    {isLogin && (<li className="logout-item"><a onClick={handleLogout}>Logout</a></li>)}
                 </ul>
             </div>
         </nav>

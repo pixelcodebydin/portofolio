@@ -19,7 +19,7 @@ function UiuxDesign() {
                 <div className="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-xs-12 mt-4" id="desc">
                     <h3>Web Design</h3>
                     <p>Highlighting a range of web designs crafted according to detailed client briefs. Each design is a testament to my commitment to translating client ideas into visually compelling and user-friendly websites.</p>
-                    <a href="https://drive.google.com/drive/folders/1wQ_UpaKtWixyiWXsj85OaDuRe7aZusA1?usp=drive_link" target="_blank"><Button desc="See more →" id="button-1" /></a>
+                    <a href="https://drive.google.com/drive/folders/1wQ_UpaKtWixyiWXsj85OaDuRe7aZusA1?usp=drive_link" target="_blank" rel="noopener noreferrer"><Button desc="See more →" id="button-1" /></a>
                 </div>
 
                 <div className="col-xl-7 col-lg-7 col-md-12 col-sm-12 col-xs-12 mt-4">
@@ -42,7 +42,7 @@ function UiuxDesign() {
                             <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                             <span className="visually-hidden">Previous</span>
                         </button>
-                        
+
                         <button className="carousel-control-next" type="button" data-bs-target="#carousel-1" data-bs-slide="next">
                             <span className="carousel-control-next-icon" aria-hidden="true"></span>
                             <span className="visually-hidden">Next</span>
@@ -57,7 +57,7 @@ function UiuxDesign() {
                 <div className="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-xs-12 mt-4" id="desc">
                     <h3>Mobile App Design</h3>
                     <p>Browse through my mobile app design projects where functionality meets style. Each design is meticulously crafted to provide a visually appealing and user-friendly experience, enhancing overall app performance.</p>
-                    <a href="https://drive.google.com/drive/folders/18k6HukApHcGJ9gWvkJqY0AmTJdobNydc?usp=drive_link" target="_blank"><Button desc="See more →" id="button-1" /></a>
+                    <a href="https://drive.google.com/drive/folders/18k6HukApHcGJ9gWvkJqY0AmTJdobNydc?usp=drive_link" target="_blank" rel="noopener noreferrer"><Button desc="See more →" id="button-1" /></a>
                 </div>
 
                 <div className="col-xl-7 col-lg-7 col-md-12 col-sm-12 col-xs-12 mt-4">
@@ -80,7 +80,7 @@ function UiuxDesign() {
                             <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                             <span className="visually-hidden">Previous</span>
                         </button>
-                        
+
                         <button className="carousel-control-next" type="button" data-bs-target="#carousel-2" data-bs-slide="next">
                             <span className="carousel-control-next-icon" aria-hidden="true"></span>
                             <span className="visually-hidden">Next</span>

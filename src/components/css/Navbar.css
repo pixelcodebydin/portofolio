@@ -1,3 +1,10 @@
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
 nav img {
     height: 35px;
     margin-right: 0rem;
@@ -8,6 +15,7 @@ nav ul {
     list-style: none;
     gap: 1.2rem;
     margin: 0;
+    flex-grow: 1;
 }
 
 nav ul li a {
@@ -15,7 +23,7 @@ nav ul li a {
     color: #AFAFAF;
 }
 
-nav ul li a:hover{
+nav ul li a:hover {
     color: black;
 }
 
@@ -23,14 +31,23 @@ nav ul li.active a {
     color: black;
 }
 
-.logout-item {
+nav .navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-left: auto;
+}
+
+.logout-item, .admin-panel {
     text-decoration: none;
     cursor: pointer;
     color: #AFAFAF;
-    position: absolute;
-    right: 0;
 }
 
-.logout-item:hover {
+.logout-item {
     color: rgb(214, 50, 50);
+}
+
+.admin-panel {
+    color: #FF8500;
 }

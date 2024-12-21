@@ -4,7 +4,7 @@ import './css/Menu.css';
 
 function Menu() {
     return (
-        <div className="container row mx-auto">
+        <div className="row">
             <div className="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-xs-6 mt-3">
                 <Link to="/admin/comments">
                     <div className="card px-3 pt-3 pb-2" id="card">

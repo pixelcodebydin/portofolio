@@ -1,16 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../assets/Logo.png';
 import './css/Navbar.css';
+import { ConfirmAlert, SuccessAlert, FailedAlert } from '../components/Swal';
 
 function Navbar() {
     const location = useLocation();
     const navigate = useNavigate();
     const isLogin = localStorage.getItem('isLogin');
 
-    function handleLogout() {
-        localStorage.removeItem('isLogin');
-        navigate('/login');
+    const handleLogout = async () => {
+        const isConfirmed = await ConfirmAlert(`Do you want to logout?`);
+        if (isConfirmed) {
+            try {
+                localStorage.removeItem('isLogin');
+                navigate('/login');
+                SuccessAlert(`You have been logged out successfully.`);
+            } catch (error) {
+                FailedAlert(`Failed to logout.`);
+            }
+        }
     }
 
     return (
@@ -28,7 +37,12 @@ function Navbar() {
                     <li className={location.pathname === "/ui-ux-design" ? "active" : ""}><Link to="/ui-ux-design">UI/UX Design</Link></li>
                     <li className={location.pathname === "/photography" ? "active" : ""}><Link to="/photography">Photography</Link></li>
                     <li className={location.pathname === "/web-development" ? "active" : ""}><Link to="/web-development">Web Development</Link></li>
-                    {isLogin && (<li className="logout-item"><a onClick={handleLogout}>Logout</a></li>)}
+                    {isLogin && (
+                        <li className="navbar-right">
+                            <Link to="/admin/comments" className="admin-panel">Admin Panel</Link>
+                            <a onClick={handleLogout} className="logout-item">Logout</a>
+                        </li>
+                    )}
                 </ul>
             </div>
         </nav>

@@ -11,7 +11,7 @@ function Photography() {
             <div className=" text-center py-5">
                 <h1 className="text-center pt-3">Photography</h1>
                 <p className="text-center">I focus on capturing meaningful moments that leave a lasting impression. From event documentation to creative photography, I ensure each shot reflects a perfect blend of storytelling and artistic vision.</p>
-                <a href="https://drive.google.com/drive/folders/1tYo-SqdJLj4Y2oAyNVVaCRDYB56dW8uA?usp=drive_link" target="_blank"><Button desc="See more →" id="button-1" /></a>
+                <a href="https://drive.google.com/drive/folders/1tYo-SqdJLj4Y2oAyNVVaCRDYB56dW8uA?usp=drive_link" target="_blank" rel="noopener noreferrer"><Button desc="See more →" id="button-1" /></a>
             </div>
 
             <hr id="line" className="mb-3"></hr>

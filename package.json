@@ -10,13 +10,17 @@
     "body-parser": "^1.20.3",
     "bootstrap": "^5.3.3",
     "cors": "^2.8.5",
+    "datatables.net-bs4": "^2.1.8",
+    "datatables.net-responsive-bs4": "^3.0.3",
     "express": "^4.21.2",
+    "jquery": "^3.7.1",
     "mysql": "^2.18.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-helmet": "^6.1.0",
     "react-router-dom": "^7.0.2",
     "react-scripts": "5.0.1",
+    "sweetalert2": "^11.15.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

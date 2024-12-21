@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import Button from '../components/Button';
+import { Button, ButtonAction } from '../components/Button';
 
 function UiuxDesign() {
     useEffect(() => {

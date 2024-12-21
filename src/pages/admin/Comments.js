@@ -75,7 +75,7 @@ function AdminComments() {
                     <h3>Comments List</h3>
                 </div>
 
-                <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+                <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} col="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-xs-6" />
             </div>
 
             <div className="table-responsive">

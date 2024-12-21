@@ -7,4 +7,10 @@ function Button({ desc, id }) {
     );
 }
 
-export default Button;
+function ButtonAction({ btnColor, symbol, text }) {
+    return (
+        <button className={`btn btn-${btnColor}`}><i className={`bi bi-${symbol}`}></i> {text}</button>
+    );
+}
+
+export { Button, ButtonAction };

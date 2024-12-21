@@ -4,7 +4,7 @@ import './css/Home.css';
 import image from '../assets/image.jpg';
 import freepik from '../assets/freepik.png';
 import shutterstock from '../assets/shutterstock.png';
-import Button from '../components/Button';
+import { Button, ButtonAction } from '../components/Button';
 
 function Home() {
     useEffect(() => {

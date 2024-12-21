@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import './css/Carousel.css';
-import Button from '../components/Button';
+import { Button, ButtonAction } from '../components/Button';
 
 function GraphicDesign() {
     useEffect(() => {

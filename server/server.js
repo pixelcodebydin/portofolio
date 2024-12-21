@@ -36,29 +36,29 @@ app.put('/api/komentar/:id/:status', (req, res) => {
     });
 });
 
-app.get('/api/graphicDesign', (req, res) => {
-    const query = 'SELECT * FROM tbl_graphic_design';
+app.get('/api/ilustrasi', (req, res) => {
+    const query = 'SELECT * FROM tbl_illustration';
     db.query(query, (err, results) => {
         if (err) {
-            console.error('Error fetching designs:', err.message);
-            res.status(500).send({ error: 'Failed to fetch designs.' });
+            console.error('Error fetching categories:', err.message);
+            res.status(500).send({ error: 'Failed to fetch categories.' });
             return;
         }
         res.json(results);
     });
 });
 
-app.put('/api/graphicDesign/:id/:status', (req, res) => {
+app.put('/api/ilustrasi/:id/:status', (req, res) => {
     const { id, status } = req.params;
-    const query = `UPDATE tbl_graphic_design SET status_graphic_design = ${status} WHERE id_graphic_design = ${id}`;
+    const query = `UPDATE tbl_illustration SET status_illustration = ${status} WHERE id_illustration = ${id}`;
     db.query(query, [status, id], (err, results) => {
         if (err) {
-            console.error('Error updating design status:', err.message);
+            console.error('Error updating category status:', err.message);
             res.status(500).send('Server error');
             return;
         }
         if (results.affectedRows === 0) {
-            return res.status(404).send('Design not found');
+            return res.status(404).send('Category not found');
         }
         res.json({ message: 'Status updated successfully' });
     });

@@ -13,3 +13,7 @@ a {
     color: white;
     text-align: left;
 }
+
+.action a button {
+    color: white;
+}

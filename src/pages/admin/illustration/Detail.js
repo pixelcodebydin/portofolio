@@ -1,64 +1,101 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Menu from '../../../components/Menu';
-import { readIllustrationData, updateStatusIllustrationData, deleteIllustrationData } from '../../../api/Illustration';
-import { ButtonAction } from '../../../components/Button';
+import { readIllustrationFile, updateStatusIllustrationFile, deleteIllustrationFile, readIllustrationCategory, addIllustrationFile } from '../../../api/Illustration';
 import Pagination from '../../../components/Pagination';
+import Modal from '../../../components/Modal';
 import { ConfirmAlert, SuccessAlert, FailedAlert } from '../../../components/Swal';
 
-function DetailIllustrationCategory() {
-    const { id }                                  = useParams();
-    const [illustration, setIllustrationData] = useState([]);
-    const [currentPage, setCurrentPage]   = useState(1);
-    const [searchTerm, setSearchTerm]     = useState('');
-    const illustrationPerPage             = 10;
+function DetailIllustration() {
+    const { id } = useParams();
+    const [illustration, setIllustrationFile] = useState([]);
+    const [categoryName, setCategoryName] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const [showModal, setShowModal] = useState(false);
+    const [file, setFile] = useState(null);
+    const illustrationFilePerPage = 10;
 
     useEffect(() => {
-        document.title = 'Illustration - Admin Panel';
-        const getIllustration = async () => {
+        const getIllustrationCategory = async () => {
             try {
-                const data = await readIllustrationData(id);
-                setIllustrationData(data);
+                const data = await readIllustrationCategory(id);
+                if (data.length > 0) {
+                    setCategoryName(data[0].kategori_illustration);
+                    document.title = `${data[0].kategori_illustration} - Admin Panel`;
+                }
             } catch (error) {
-                console.error('Failed to fetch categories:', error);
+                console.error('Failed to fetch illustration category:', error);
+                document.title = 'Illustration - Admin Panel';
             }
         };
-        getIllustration();
-    }, []);
 
-    const filteredIllustration = illustration.filter((item) =>
-        item.id_illustration.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+        const getIllustrationFile = async () => {
+            try {
+                const data = await readIllustrationFile(id);
+                setIllustrationFile(data);
+            } catch (error) {
+                console.error('Failed to fetch illustration files:', error);
+            }
+        };
 
-    const lastIllustration    = currentPage * illustrationPerPage;
-    const firstIllustration   = lastIllustration - illustrationPerPage;
-    const currentIllustration = filteredIllustration.slice(firstIllustration, lastIllustration);
-    const totalPages          = Math.ceil(filteredIllustration.length / illustrationPerPage);
+        getIllustrationCategory();
+        getIllustrationFile();
+    }, [id]);
+
+    const lastIllustrationFile = currentPage * illustrationFilePerPage;
+    const firstIllustrationFile = lastIllustrationFile - illustrationFilePerPage;
+    const currentIllustrationFile = illustration.slice(firstIllustrationFile, lastIllustrationFile);
+    const totalPages = Math.ceil(illustration.length / illustrationFilePerPage);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
 
+    const handleChange = (e) => {
+        setFile(e.target.files[0]);
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!file) {
+            FailedAlert('Please select a file first.');
+            return;
+        }
+    
+        const formData = new FormData();
+        formData.append('id_illustration', id);
+        formData.append('file_illustration', file);
+    
+        try {
+            await addIllustrationFile(formData);
+            SuccessAlert('File added successfully!');
+        } catch (error) {
+            console.error('Error uploading file:', error.message);
+            FailedAlert('Failed to add the file. Please try again.');
+        }
+    };
+
     const handleStatusChange = async (id, currentStatus) => {
         if (!id || typeof currentStatus !== 'number') {
-            FailedAlert('Invalid category data.');
+            FailedAlert('Invalid file.');
             return;
         }
 
         const newStatus = currentStatus === 1 ? 0 : 1;
         const action = newStatus === 1 ? 'enable' : 'disable';
         const isConfirmed = await ConfirmAlert(`Do you want to ${action} this file?`);
+
         if (isConfirmed) {
             try {
-                await updateStatusIllustrationData(id, newStatus);
-                setIllustrationData(prevIllustrationData =>
-                    prevIllustrationData.map(item =>
+                await updateStatusIllustrationFile(id, newStatus);
+                setIllustrationFile(prevIllustrationFile =>
+                    prevIllustrationFile.map(item =>
                         item.id_file_illustration === id ? { ...item, status_file_illustration: newStatus } : item
                     )
                 );
                 SuccessAlert(`File has been ${action}d successfully.`);
             } catch (error) {
-                FailedAlert(`Failed to ${action} file.`);
+                FailedAlert(`Failed to ${action} the file.`);
             }
         }
     };
@@ -70,16 +107,15 @@ function DetailIllustrationCategory() {
         }
 
         const isConfirmed = await ConfirmAlert('Do you want to delete this file?');
-
         if (isConfirmed) {
             try {
-                await deleteIllustrationData(id);
-                setIllustrationData((prevIllustrationData) =>
-                    prevIllustrationData.filter((item) => item.id_file_illustration !== id)
+                await deleteIllustrationFile(id);
+                setIllustrationFile((prevIllustrationFile) =>
+                    prevIllustrationFile.filter((item) => item.id_file_illustration !== id)
                 );
                 SuccessAlert('File deleted successfully.');
             } catch (error) {
-                FailedAlert('Failed to delete file. Please try again.');
+                FailedAlert('Failed to delete the file. Please try again.');
             }
         }
     };
@@ -90,18 +126,12 @@ function DetailIllustrationCategory() {
             <Menu />
 
             <div className="row mt-5 mb-2">
-                <div className="col-xl-6 col-lg-5 col-md-5 col-sm-12 col-xs-12 mt-1">
-                    <h3>Illustration Categories</h3>
+                <div className="col-xl-10 col-lg-10 col-md-9 col-sm-9 col-xs-9 mt-1">
+                    <h3>{categoryName}</h3>
                 </div>
 
-                <div className="col-xl-6 col-lg-7 col-md-7 col-sm-12 col-xs-12">
-                    <div className="row">
-                        <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-1">
-                            <Link to={'/admin/illustration/add'}>
-                                <ButtonAction btnColor="secondary" symbol="plus" text="Add File" />
-                            </Link>
-                        </div>
-                    </div>
+                <div className="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-xs-3 mt-1">
+                <button className="btn btn-secondary" onClick={() => setShowModal(true)}><i className="bi bi-plus"></i> Add File</button>
                 </div>
             </div>
 
@@ -117,11 +147,11 @@ function DetailIllustrationCategory() {
                     </thead>
 
                     <tbody>
-                        {currentIllustration.length > 0 ? (
-                            currentIllustration.map((item, index) => (
-                                <tr key={item.id_file_illustration} id="baris">
-                                    <td className="text-center">{(currentPage - 1) * illustrationPerPage + index + 1}</td>
-                                    <td className="text-center"><img src={`/image/illustration/${item.file_illustration}`} alt="Preview" /></td>
+                        {currentIllustrationFile.length > 0 ? (
+                            currentIllustrationFile.map((item, index) => (
+                                <tr key={item.id_file_illustration}>
+                                    <td className="text-center">{(currentPage - 1) * illustrationFilePerPage + index + 1}</td>
+                                    <td style={{width: '30rem'}}><img src={`/image/illustration/${item.file_illustration}`} style={{width: '100%', borderRadius: '0.5rem'}} /></td>
                                     <td className="text-center">
                                         <button className={`btn ${item.status_file_illustration === 1 ? 'btn-success' : 'btn-danger'}`} onClick={() => handleStatusChange(item.id_file_illustration, item.status_file_illustration)}>
                                             {item.status_file_illustration === 1 ? 'Enable' : 'Disable'}
@@ -129,14 +159,13 @@ function DetailIllustrationCategory() {
                                     </td>
 
                                     <td className="text-center action">
-                                        <Link to={'/'}><ButtonAction btnColor="warning mt-1" symbol="pen" text="" /></Link>
                                         <button onClick={() => handleDelete(item.id_file_illustration)} className="btn btn-danger mt-1"><i className="bi bi-trash"></i></button>
                                     </td>
                                 </tr>
                             ))
                         ) : (
                             <tr>
-                                <td colSpan="4" className="text-center">No illustrations found.</td>
+                                <td colSpan="4" className="text-center">No illustration files found.</td>
                             </tr>
                         )}
                     </tbody>
@@ -144,8 +173,9 @@ function DetailIllustrationCategory() {
             </div>
 
             <Pagination totalPages={totalPages} currentPage={currentPage} handlePageChange={handlePageChange} />
+            <Modal showModal={showModal} setShowModal={setShowModal} category="illustration" onSubmit={handleSubmit} onChange={handleChange} idIllustration={id} />
         </div>
     );
 }
 
-export default DetailIllustrationCategory;
+export default DetailIllustration;

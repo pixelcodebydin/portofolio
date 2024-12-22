@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { addIllustration } from '../../../api/Illustration';
 import { SuccessAlert, FailedAlert } from '../../../components/Swal';
 
-function AddIllustrationCategory() {
+function AddIllustration() {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         kategori_illustration: '',
@@ -53,4 +53,4 @@ function AddIllustrationCategory() {
     );
 };
 
-export default AddIllustrationCategory;
+export default AddIllustration;

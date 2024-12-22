@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { updateIllustration, readIllustrationData } from '../../../api/Illustration';
+import { updateIllustrationCategory, readIllustrationCategory } from '../../../api/Illustration';
 import { SuccessAlert, FailedAlert } from '../../../components/Swal';
 
-function UpdateIllustrationCategory() {
+function UpdateIllustration() {
     const { id }                  = useParams();
     const navigate                = useNavigate();
     const [formData, setFormData] = useState({
@@ -14,9 +14,9 @@ function UpdateIllustrationCategory() {
 
     useEffect(() => {
         document.title = 'Update Illustration Category - Admin Panel';
-        const getIllustrationData = async () => {
+        const getIllustrationFile = async () => {
             try {
-                const response = await readIllustrationData(id); // Gunakan ID dari URL
+                const response = await readIllustrationCategory(id);
                 setFormData({
                     kategori_illustration: response.kategori_illustration,
                     deskripsi_illustration: response.deskripsi_illustration,
@@ -27,7 +27,7 @@ function UpdateIllustrationCategory() {
                 navigate('/admin/illustration');
             }
         };
-        getIllustrationData();
+        getIllustrationFile();
     }, [id, navigate]);
 
     const handleChange = (e) => {
@@ -39,7 +39,7 @@ function UpdateIllustrationCategory() {
         e.preventDefault();
 
         try {
-            await updateIllustration({ id, ...formData });
+            await updateIllustrationCategory({ id, ...formData });
             SuccessAlert('Category updated successfully!');
             navigate('/admin/illustration');
         } catch (error) {
@@ -66,4 +66,4 @@ function UpdateIllustrationCategory() {
     );
 };
 
-export default UpdateIllustrationCategory;
+export default UpdateIllustration;

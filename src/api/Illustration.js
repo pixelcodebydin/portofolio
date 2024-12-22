@@ -11,12 +11,22 @@ export const readIllustration = async () => {
     }
 };
 
-export const readIllustrationData = async (id) => {
+export const readIllustrationCategory = async (id) => {
     try {
-        const response = await axios.get(`${API_URL}/ilustrasi/data/${id}`);
+        const response = await axios.get(`${API_URL}/ilustrasi/kategori/${id}`);
         return response.data;
     } catch (error) {
-        console.error('Error fetching illustration category:', error);
+        console.error('Error fetching illustration categories:', error);
+        throw error;
+    }
+};
+
+export const readIllustrationFile = async (id) => {
+    try {
+        const response = await axios.get(`${API_URL}/ilustrasi/file/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching illustration files:', error);
         throw error;
     }
 };
@@ -31,9 +41,9 @@ export const updateStatusIllustration = async (id, status) => {
     }
 };
 
-export const updateStatusIllustrationData = async (id, status) => {
+export const updateStatusIllustrationFile = async (id, status) => {
     try {
-        const response = await axios.put(`${API_URL}/ilustrasi/data/${id}/${status}`);
+        const response = await axios.put(`${API_URL}/ilustrasi/file/${id}/${status}`);
         return response.data;
     } catch (error) {
         console.error(`Failed to update the status of illustration file with ID ${id}. Error: ${error.message}`);
@@ -51,7 +61,21 @@ export const addIllustration = async (data) => {
     }
 };
 
-export const updateIllustration = async (data) => {
+export const addIllustrationFile = async (data) => {
+    try {
+        const response = await axios.post(`${API_URL}/ilustrasi/tambah/file`, data, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Failed to add the illustration file:', error.response?.data || error.message);
+        throw new Error(error.response?.data?.error || 'Unable to add the illustration file. Please try again later.');
+    }
+};
+
+export const updateIllustrationCategory = async (data) => {
     try {
         const response = await axios.put(`${API_URL}/ilustrasi/ubah`, data);
         return response.data;
@@ -71,9 +95,9 @@ export const deleteIllustration = async (id) => {
     }
 };
 
-export const deleteIllustrationData = async (id) => {
+export const deleteIllustrationFile = async (id) => {
     try {
-        const response = await axios.delete(`${API_URL}/ilustrasi/data/hapus/${id}`);
+        const response = await axios.delete(`${API_URL}/ilustrasi/hapus/file/${id}`);
         return response.data;
     } catch (error) {
         console.error(`Failed to delete file with ID ${id}. Error: ${error.message}`);

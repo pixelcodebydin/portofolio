@@ -4,6 +4,19 @@ const bodyParser = require('body-parser');
 const db = require('./database');
 const app = express();
 const PORT = 5000;
+const multer = require('multer');
+const path = require('path');
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, path.join(__dirname, '../', 'public', 'image', 'illustration'));
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + '-' + file.originalname);
+    }
+});
+
+const upload = multer({ storage });
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -48,24 +61,29 @@ app.get('/api/ilustrasi', (req, res) => {
     });
 });
 
-app.get('/api/ilustrasi/data/:id', (req, res) => {
+app.get('/api/ilustrasi/kategori/:id', (req, res) => {
     const { id } = req.params;
-    if (!id || isNaN(id)) {
-        return res.status(400).json({ message: 'Invalid ID parameter' });
-    }
-
-    const query = `SELECT * FROM tbl_illustration WHERE id_illustration = ?`;
-    db.query(query, [id], (err, results) => {
+    const query = `SELECT * FROM tbl_illustration WHERE id_illustration = ${id}`;
+    db.query(query, (err, results) => {
         if (err) {
-            console.error('Error fetching illustration data:', err.message);
-            return res.status(500).json({ message: 'Failed to fetch category data', error: err.message });
+            console.error(`Error fetching category with ID ${id}:`, err.message);
+            res.status(500).send({ error: `Failed to fetch category with ID ${id}.` });
+            return;
         }
+        res.json(results);
+    });
+});
 
-        if (results.length === 0) {
-            return res.status(404).json({ message: 'Category data not found' });
+app.get('/api/ilustrasi/file/:id', (req, res) => {
+    const { id } = req.params;
+    const query = `SELECT * FROM tbl_file_illustration WHERE id_illustration = ${id}`;
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error(`Error fetching file with ID ${id}:`, err.message);
+            res.status(500).send({ error: `Failed to fetch file with ID ${id}.` });
+            return;
         }
-
-        res.status(200).json(results[0]);
+        res.json(results);
     });
 });
 
@@ -85,7 +103,7 @@ app.put('/api/ilustrasi/:id/:status', (req, res) => {
     });
 });
 
-app.put('/api/ilustrasi/data/:id/:status', (req, res) => {
+app.put('/api/ilustrasi/file/:id/:status', (req, res) => {
     const { id, status } = req.params;
     const query = `UPDATE tbl_file_illustration SET status_file_illustration = ${status} WHERE id_file_illustration = ${id}`;
     db.query(query, [status, id], (err, results) => {
@@ -123,6 +141,29 @@ app.post('/api/ilustrasi/tambah', (req, res) => {
     });
 });
 
+app.post('/api/ilustrasi/tambah/file', upload.single('file_illustration'), (req, res) => {
+    const { id_illustration } = req.body;
+    const file = req.file;
+
+    if (!file) {
+        return res.status(400).json({ error: 'No file uploaded or invalid file format' });
+    }
+
+    const query = `
+        INSERT INTO tbl_file_illustration (id_illustration, file_illustration, status_file_illustration)
+        VALUES (?, ?, 1)
+    `;
+
+    db.query(query, [id_illustration, file.filename], (err, result) => {
+        if (err) {
+            console.error('Database error:', err.message);
+            return res.status(500).json({ error: 'Internal server error' });
+        }
+
+        res.status(201).json({ message: 'Illustration file added successfully', id: result.insertId });
+    });
+});
+
 app.put('/api/ilustrasi/ubah', (req, res) => {
     const { id, kategori_illustration, deskripsi_illustration, link_illustration } = req.body;
     if (!id || !kategori_illustration || !deskripsi_illustration || !link_illustration) {
@@ -148,7 +189,36 @@ app.put('/api/ilustrasi/ubah', (req, res) => {
     });
 });
 
-app.delete('/api/ilustrasi/data/hapus/:id', (req, res) => {
+app.delete('/api/ilustrasi/hapus/:id', (req, res) => {
+    const { id } = req.params;
+    if (!id || isNaN(id)) {
+        return res.status(400).json({ message: 'Invalid ID parameter' });
+    }
+
+    const deleteFileIllustrationQuery = `DELETE FROM tbl_file_illustration WHERE id_illustration = ${id}`;
+    db.query(deleteFileIllustrationQuery, [id], (err, fileResults) => {
+        if (err) {
+            console.error('Error deleting files related to the illustration:', err.message);
+            return res.status(500).json({ message: 'Failed to delete related files', error: err.message });
+        }
+
+        const deleteIllustrationQuery = `DELETE FROM tbl_illustration WHERE id_illustration = ${id}`;
+        db.query(deleteIllustrationQuery, [id], (err, illustrationResults) => {
+            if (err) {
+                console.error('Error deleting illustration:', err.message);
+                return res.status(500).json({ message: 'Failed to delete illustration', error: err.message });
+            }
+
+            if (illustrationResults.affectedRows === 0) {
+                return res.status(404).json({ message: 'Illustration not found' });
+            }
+
+            res.status(200).json({ message: 'Illustration and related files deleted successfully' });
+        });
+    });
+});
+
+app.delete('/api/ilustrasi/hapus/file/:id', (req, res) => {
     const { id } = req.params;
     if (!id || isNaN(id)) {
         return res.status(400).json({ message: 'Invalid ID parameter' });
@@ -166,27 +236,6 @@ app.delete('/api/ilustrasi/data/hapus/:id', (req, res) => {
         }
 
         res.status(200).json({ message: 'File deleted successfully' });
-    });
-});
-
-app.delete('/api/ilustrasi/hapus/:id', (req, res) => {
-    const { id } = req.params;
-    if (!id || isNaN(id)) {
-        return res.status(400).json({ message: 'Invalid ID parameter' });
-    }
-
-    const query = `DELETE FROM tbl_illustration WHERE id_illustration = ?`;
-    db.query(query, [id], (err, results) => {
-        if (err) {
-            console.error('Error deleting category:', err.message);
-            return res.status(500).json({ message: 'Failed to delete category', error: err.message });
-        }
-
-        if (results.affectedRows === 0) {
-            return res.status(404).json({ message: 'Category not found' });
-        }
-
-        res.status(200).json({ message: 'Category deleted successfully' });
     });
 });
 

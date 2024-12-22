@@ -10,11 +10,10 @@ import Photography from './pages/Photography';
 import WebDevelopment from './pages/WebDevelopment';
 import Login from './pages/Login';
 import AdminComments from './pages/admin/Comments';
-import AdminGraphicDesign from './pages/admin/GraphicDesign';
-import AdminUiuxDesign from './pages/admin/UiuxDesign';
 import AdminIllustration from './pages/admin/Illustration';
-import AdminPhotography from './pages/admin/Photography';
-import AdminWebDevelopment from './pages/admin/WebDevelopment';
+import AddIllustrationCategory from './pages/admin/illustration/Add';
+import DetailIllustrationCategory from './pages/admin/illustration/Detail';
+import UpdateIllustrationCategory from './pages/admin/illustration/Update';
 
 function App() {
     const isLogin = localStorage.getItem('isLogin');
@@ -29,13 +28,12 @@ function App() {
                 <Route path="/illustration" element={<Illustration />} />
                 <Route path="/photography" element={<Photography />} />
                 <Route path="/web-development" element={<WebDevelopment />} />
-                <Route path="/login" element={<Login />} />
+                <Route path="/login" element={!isLogin ? <Login /> : <Navigate to="/admin/comments" />}  />
                 <Route path="/admin/comments" element={isLogin ? <AdminComments /> : <Navigate to="/" />}  />
-                <Route path="/admin/graphic-design" element={isLogin ? <AdminGraphicDesign /> : <Navigate to="/" />}  />
-                <Route path="/admin/ui-ux-design" element={isLogin ? <AdminUiuxDesign /> : <Navigate to="/" />}  />
                 <Route path="/admin/illustration" element={isLogin ? <AdminIllustration /> : <Navigate to="/" />}  />
-                <Route path="/admin/photography" element={isLogin ? <AdminPhotography /> : <Navigate to="/" />}  />
-                <Route path="/admin/web-development" element={isLogin ? <AdminWebDevelopment /> : <Navigate to="/" />}  />
+                <Route path="/admin/illustration/add" element={isLogin ? <AddIllustrationCategory /> : <Navigate to="/" />}  />
+                <Route path="/admin/illustration/detail/:id" element={isLogin ? <DetailIllustrationCategory /> : <Navigate to="/" />}  />
+                <Route path="/admin/illustration/update/:id" element={isLogin ? <UpdateIllustrationCategory /> : <Navigate to="/" />}  />
             </Routes>
             <Footer />
         </Router>

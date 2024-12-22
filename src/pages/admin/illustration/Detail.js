@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import Menu from '../../components/Menu';
-import { readIllustration, updateStatusIllustration, deleteIllustration } from '../../api/Illustration';
-import { ButtonAction } from '../../components/Button';
-import Pagination from '../../components/Pagination';
-import SearchBar from '../../components/SearchBar';
-import { ConfirmAlert, SuccessAlert, FailedAlert } from '../../components/Swal';
+import { Link, useParams } from 'react-router-dom';
+import Menu from '../../../components/Menu';
+import { readIllustrationData, updateStatusIllustrationData, deleteIllustrationData } from '../../../api/Illustration';
+import { ButtonAction } from '../../../components/Button';
+import Pagination from '../../../components/Pagination';
+import { ConfirmAlert, SuccessAlert, FailedAlert } from '../../../components/Swal';
 
-function AdminIllustration() {
-    const [illustration, setIllustration] = useState([]);
+function DetailIllustrationCategory() {
+    const { id }                                  = useParams();
+    const [illustration, setIllustrationData] = useState([]);
     const [currentPage, setCurrentPage]   = useState(1);
     const [searchTerm, setSearchTerm]     = useState('');
     const illustrationPerPage             = 10;
@@ -17,8 +17,8 @@ function AdminIllustration() {
         document.title = 'Illustration - Admin Panel';
         const getIllustration = async () => {
             try {
-                const data = await readIllustration();
-                setIllustration(data);
+                const data = await readIllustrationData(id);
+                setIllustrationData(data);
             } catch (error) {
                 console.error('Failed to fetch categories:', error);
             }
@@ -27,7 +27,7 @@ function AdminIllustration() {
     }, []);
 
     const filteredIllustration = illustration.filter((item) =>
-        item.kategori_illustration.toLowerCase().includes(searchTerm.toLowerCase())
+        item.id_illustration.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     const lastIllustration    = currentPage * illustrationPerPage;
@@ -47,40 +47,39 @@ function AdminIllustration() {
 
         const newStatus = currentStatus === 1 ? 0 : 1;
         const action = newStatus === 1 ? 'enable' : 'disable';
-        const isConfirmed = await ConfirmAlert(`Do you want to ${action} this category?`);
-
+        const isConfirmed = await ConfirmAlert(`Do you want to ${action} this file?`);
         if (isConfirmed) {
             try {
-                await updateStatusIllustration(id, newStatus);
-                setIllustration(prevIllustration =>
-                    prevIllustration.map(item =>
-                        item.id_illustration === id ? { ...item, status_illustration: newStatus } : item
+                await updateStatusIllustrationData(id, newStatus);
+                setIllustrationData(prevIllustrationData =>
+                    prevIllustrationData.map(item =>
+                        item.id_file_illustration === id ? { ...item, status_file_illustration: newStatus } : item
                     )
                 );
-                SuccessAlert(`The category has been ${action}d successfully.`);
+                SuccessAlert(`File has been ${action}d successfully.`);
             } catch (error) {
-                FailedAlert(`Failed to ${action} the category.`);
+                FailedAlert(`Failed to ${action} file.`);
             }
         }
     };
 
     const handleDelete = async (id) => {
         if (!id) {
-            FailedAlert('Invalid category ID.');
+            FailedAlert('Invalid file ID.');
             return;
         }
-    
-        const isConfirmed = await ConfirmAlert('Do you want to delete this category?');
-    
+
+        const isConfirmed = await ConfirmAlert('Do you want to delete this file?');
+
         if (isConfirmed) {
             try {
-                await deleteIllustration(id);
-                setIllustration((prevIllustration) =>
-                    prevIllustration.filter((item) => item.id_illustration !== id)
+                await deleteIllustrationData(id);
+                setIllustrationData((prevIllustrationData) =>
+                    prevIllustrationData.filter((item) => item.id_file_illustration !== id)
                 );
-                SuccessAlert('Category deleted successfully.');
+                SuccessAlert('File deleted successfully.');
             } catch (error) {
-                FailedAlert('Failed to delete the category. Please try again.');
+                FailedAlert('Failed to delete file. Please try again.');
             }
         }
     };
@@ -97,13 +96,9 @@ function AdminIllustration() {
 
                 <div className="col-xl-6 col-lg-7 col-md-7 col-sm-12 col-xs-12">
                     <div className="row">
-                        <div className="col-xl-8 col-lg-8 col-md-7 col-sm-12 col-xs-12 mt-1">
-                            <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-                        </div>
-
-                        <div className="col-xl-4 col-lg-4 col-md-5 col-sm-12 col-xs-12 mt-1">
+                        <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-1">
                             <Link to={'/admin/illustration/add'}>
-                                <ButtonAction btnColor="secondary" symbol="plus" text="Add Category" />
+                                <ButtonAction btnColor="secondary" symbol="plus" text="Add File" />
                             </Link>
                         </div>
                     </div>
@@ -115,9 +110,7 @@ function AdminIllustration() {
                     <thead>
                         <tr className="text-center">
                             <th>No</th>
-                            <th>Category</th>
-                            <th>Description</th>
-                            <th>Link</th>
+                            <th>Preview</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -126,27 +119,24 @@ function AdminIllustration() {
                     <tbody>
                         {currentIllustration.length > 0 ? (
                             currentIllustration.map((item, index) => (
-                                <tr key={item.id_illustration} id="baris">
+                                <tr key={item.id_file_illustration} id="baris">
                                     <td className="text-center">{(currentPage - 1) * illustrationPerPage + index + 1}</td>
-                                    <td>{item.kategori_illustration}</td>
-                                    <td>{item.deskripsi_illustration}</td>
-                                    <td className="text-center"><a href={item.link_illustration} target="_blank" rel="noopener noreferrer">See more</a></td>
+                                    <td className="text-center"><img src={`/image/illustration/${item.file_illustration}`} alt="Preview" /></td>
                                     <td className="text-center">
-                                        <button className={`btn ${item.status_illustration === 1 ? 'btn-success' : 'btn-danger'}`} onClick={() => handleStatusChange(item.id_illustration, item.status_illustration)}>
-                                            {item.status_illustration === 1 ? 'Enable' : 'Disable'}
+                                        <button className={`btn ${item.status_file_illustration === 1 ? 'btn-success' : 'btn-danger'}`} onClick={() => handleStatusChange(item.id_file_illustration, item.status_file_illustration)}>
+                                            {item.status_file_illustration === 1 ? 'Enable' : 'Disable'}
                                         </button>
                                     </td>
 
                                     <td className="text-center action">
-                                        <Link to={`/admin/illustration/detail/${item.id_illustration}`}><ButtonAction btnColor="info mt-1" symbol="eye" text="" /></Link>
-                                        <Link to={`/admin/illustration/update/${item.id_illustration}`}><ButtonAction btnColor="warning mt-1" symbol="pen" text="" /></Link>
-                                        <button onClick={() => handleDelete(item.id_illustration)} className="btn btn-danger mt-1"><i className="bi bi-trash"></i></button>
+                                        <Link to={'/'}><ButtonAction btnColor="warning mt-1" symbol="pen" text="" /></Link>
+                                        <button onClick={() => handleDelete(item.id_file_illustration)} className="btn btn-danger mt-1"><i className="bi bi-trash"></i></button>
                                     </td>
                                 </tr>
                             ))
                         ) : (
                             <tr>
-                                <td colSpan="6" className="text-center">No illustration categories found.</td>
+                                <td colSpan="4" className="text-center">No illustrations found.</td>
                             </tr>
                         )}
                     </tbody>
@@ -158,4 +148,4 @@ function AdminIllustration() {
     );
 }
 
-export default AdminIllustration;
+export default DetailIllustrationCategory;

@@ -11,6 +11,16 @@ export const readIllustration = async () => {
     }
 };
 
+export const readIllustrationData = async (id) => {
+    try {
+        const response = await axios.get(`${API_URL}/ilustrasi/data/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching illustration category:', error);
+        throw error;
+    }
+};
+
 export const updateStatusIllustration = async (id, status) => {
     try {
         const response = await axios.put(`${API_URL}/ilustrasi/${id}/${status}`);
@@ -18,5 +28,55 @@ export const updateStatusIllustration = async (id, status) => {
     } catch (error) {
         console.error(`Failed to update the status of illustration category with ID ${id}. Error: ${error.message}`);
         throw new Error('Unable to update the illustration category status. Please try again later.');
+    }
+};
+
+export const updateStatusIllustrationData = async (id, status) => {
+    try {
+        const response = await axios.put(`${API_URL}/ilustrasi/data/${id}/${status}`);
+        return response.data;
+    } catch (error) {
+        console.error(`Failed to update the status of illustration file with ID ${id}. Error: ${error.message}`);
+        throw new Error('Unable to update the illustration file status. Please try again later.');
+    }
+};
+
+export const addIllustration = async (data) => {
+    try {
+        const response = await axios.post(`${API_URL}/ilustrasi/tambah`, data);
+        return response.data;
+    } catch (error) {
+        console.error('Failed to add the illustration category:', error);
+        throw new Error('Unable to add the illustration category. Please try again later.');
+    }
+};
+
+export const updateIllustration = async (data) => {
+    try {
+        const response = await axios.put(`${API_URL}/ilustrasi/ubah`, data);
+        return response.data;
+    } catch (error) {
+        console.error('Failed to update the illustration category:', error);
+        throw new Error('Unable to update the illustration category. Please try again later.');
+    }
+};
+
+export const deleteIllustration = async (id) => {
+    try {
+        const response = await axios.delete(`${API_URL}/ilustrasi/hapus/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error(`Failed to delete the category with ID ${id}. Error: ${error.message}`);
+        throw new Error('Unable to delete the category. Please try again later.');
+    }
+};
+
+export const deleteIllustrationData = async (id) => {
+    try {
+        const response = await axios.delete(`${API_URL}/ilustrasi/data/hapus/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error(`Failed to delete file with ID ${id}. Error: ${error.message}`);
+        throw new Error('Unable to delete file. Please try again later.');
     }
 };

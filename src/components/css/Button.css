@@ -20,3 +20,12 @@
     background: linear-gradient(to left, #FFAE00, #FF9E36);
     width: 100%;
 }
+
+.btn-secondary {
+    width: 100%;
+    max-width: 100%;
+}
+
+a .btn-info:hover, a .btn-warning:hover {
+    color: white;
+}

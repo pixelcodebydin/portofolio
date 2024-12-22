@@ -41,7 +41,7 @@ function AdminIllustration() {
 
     const handleStatusChange = async (id, currentStatus) => {
         if (!id || typeof currentStatus !== 'number') {
-            FailedAlert('Invalid category data.');
+            FailedAlert('Invalid category.');
             return;
         }
 

@@ -1,51 +1,51 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { readIllustrationFile, updateStatusIllustrationFile, deleteIllustrationFile, readIllustrationCategory, addIllustrationFile } from '../../../api/Illustration';
+import { readGraphicDesignFile, updateStatusGraphicDesignFile, deleteGraphicDesignFile, readGraphicDesignCategory, addGraphicDesignFile } from '../../../api/GraphicDesign';
 import Menu from '../../../components/Menu';
 import Pagination from '../../../components/Pagination';
 import Modal from '../../../components/Modal';
 import { ConfirmAlert, SuccessAlert, FailedAlert } from '../../../components/Swal';
 
-function DetailIllustration() {
+function DetailGraphicDesign() {
     const { id } = useParams();
-    const [illustration, setIllustrationFile] = useState([]);
-    const [categoryName, setCategoryName]     = useState('');
-    const [currentPage, setCurrentPage]       = useState(1);
-    const [showModal, setShowModal]           = useState(false);
-    const [file, setFile]                     = useState(null);
-    const illustrationFilePerPage             = 10;
+    const [graphicDesign, setGraphicDesignFile] = useState([]);
+    const [categoryName, setCategoryName]       = useState('');
+    const [currentPage, setCurrentPage]         = useState(1);
+    const [showModal, setShowModal]             = useState(false);
+    const [file, setFile]                       = useState(null);
+    const graphicDesignFilePerPage              = 10;
 
     useEffect(() => {
-        const getIllustrationCategory = async () => {
+        const getGraphicDesignCategory = async () => {
             try {
-                const data = await readIllustrationCategory(id);
+                const data = await readGraphicDesignCategory(id);
                 if (data.length > 0) {
-                    setCategoryName(data[0].kategori_illustration);
-                    document.title = `${data[0].kategori_illustration} - Admin Panel`;
+                    setCategoryName(data[0].kategori_graphic_design);
+                    document.title = `${data[0].kategori_graphic_design} - Admin Panel`;
                 }
             } catch (error) {
-                console.error('Failed to fetch illustration category:', error);
-                document.title = 'Illustration - Admin Panel';
+                console.error('Failed to fetch graphic design category:', error);
+                document.title = 'Graphic Design - Admin Panel';
             }
         };
 
-        const getIllustrationFile = async () => {
+        const getGraphicDesignFile = async () => {
             try {
-                const data = await readIllustrationFile(id);
-                setIllustrationFile(data);
+                const data = await readGraphicDesignFile(id);
+                setGraphicDesignFile(data);
             } catch (error) {
-                console.error('Failed to fetch illustration files:', error);
+                console.error('Failed to fetch graphic design files:', error);
             }
         };
 
-        getIllustrationCategory();
-        getIllustrationFile();
+        getGraphicDesignCategory();
+        getGraphicDesignFile();
     }, [id]);
 
-    const lastIllustrationFile    = currentPage * illustrationFilePerPage;
-    const firstIllustrationFile   = lastIllustrationFile - illustrationFilePerPage;
-    const currentIllustrationFile = illustration.slice(firstIllustrationFile, lastIllustrationFile);
-    const totalPages              = Math.ceil(illustration.length / illustrationFilePerPage);
+    const lastGraphicDesignFile    = currentPage * graphicDesignFilePerPage;
+    const firstGraphicDesignFile   = lastGraphicDesignFile - graphicDesignFilePerPage;
+    const currentGraphicDesignFile = graphicDesign.slice(firstGraphicDesignFile, lastGraphicDesignFile);
+    const totalPages               = Math.ceil(graphicDesign.length / graphicDesignFilePerPage);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -63,11 +63,11 @@ function DetailIllustration() {
         }
     
         const formData = new FormData();
-        formData.append('id_illustration', id);
-        formData.append('file_illustration', file);
+        formData.append('id_graphic_design', id);
+        formData.append('file_graphic_design', file);
     
         try {
-            await addIllustrationFile(formData);
+            await addGraphicDesignFile(formData);
             SuccessAlert('File added successfully!');
         } catch (error) {
             console.error('Error uploading file:', error.message);
@@ -87,10 +87,10 @@ function DetailIllustration() {
 
         if (isConfirmed) {
             try {
-                await updateStatusIllustrationFile(id, newStatus);
-                setIllustrationFile(prevIllustrationFile =>
-                    prevIllustrationFile.map(item =>
-                        item.id_file_illustration === id ? { ...item, status_file_illustration: newStatus } : item
+                await updateStatusGraphicDesignFile(id, newStatus);
+                setGraphicDesignFile(prevGraphicDesignFile =>
+                    prevGraphicDesignFile.map(item =>
+                        item.id_file_graphic_design === id ? { ...item, status_file_graphic_design: newStatus } : item
                     )
                 );
                 SuccessAlert(`File has been ${action}d successfully.`);
@@ -109,9 +109,9 @@ function DetailIllustration() {
         const isConfirmed = await ConfirmAlert('Do you want to delete this file?');
         if (isConfirmed) {
             try {
-                await deleteIllustrationFile(id);
-                setIllustrationFile((prevIllustrationFile) =>
-                    prevIllustrationFile.filter((item) => item.id_file_illustration !== id)
+                await deleteGraphicDesignFile(id);
+                setGraphicDesignFile((prevGraphicDesignFile) =>
+                    prevGraphicDesignFile.filter((item) => item.id_file_graphic_design !== id)
                 );
                 SuccessAlert('File deleted successfully.');
             } catch (error) {
@@ -144,28 +144,28 @@ function DetailIllustration() {
                     </thead>
 
                     <tbody>
-                        {currentIllustrationFile.length > 0 ? (
-                            currentIllustrationFile.map((item, index) => (
-                                <tr key={item.id_file_illustration}>
-                                    <td className="text-center">{(currentPage - 1) * illustrationFilePerPage + index + 1}</td>
+                        {currentGraphicDesignFile.length > 0 ? (
+                            currentGraphicDesignFile.map((item, index) => (
+                                <tr key={item.id_file_graphic_design}>
+                                    <td className="text-center">{(currentPage - 1) * graphicDesignFilePerPage + index + 1}</td>
                                     <td style={{width: '30rem'}}>
-                                        <img src={`/image/illustration/${item.file_illustration}`} style={{width: '100%', borderRadius: '0.5rem'}} />
+                                        <img src={`/image/graphic-design/${item.file_graphic_design}`} style={{width: '100%', borderRadius: '0.5rem'}} />
                                     </td>
                                     
                                     <td className="text-center">
-                                        <button className={`btn ${item.status_file_illustration === 1 ? 'btn-success' : 'btn-danger'}`} onClick={() => handleStatusChange(item.id_file_illustration, item.status_file_illustration)}>
-                                            {item.status_file_illustration === 1 ? 'Enable' : 'Disable'}
+                                        <button className={`btn ${item.status_file_graphic_design === 1 ? 'btn-success' : 'btn-danger'}`} onClick={() => handleStatusChange(item.id_file_graphic_design, item.status_file_graphic_design)}>
+                                            {item.status_file_graphic_design === 1 ? 'Enable' : 'Disable'}
                                         </button>
                                     </td>
 
                                     <td className="text-center action">
-                                        <button onClick={() => handleDelete(item.id_file_illustration)} className="btn btn-danger mt-1"><i className="bi bi-trash"></i></button>
+                                        <button onClick={() => handleDelete(item.id_file_graphic_design)} className="btn btn-danger mt-1"><i className="bi bi-trash"></i></button>
                                     </td>
                                 </tr>
                             ))
                         ) : (
                             <tr>
-                                <td colSpan="4" className="text-center">No illustration files found.</td>
+                                <td colSpan="4" className="text-center">No graphic design files found.</td>
                             </tr>
                         )}
                     </tbody>
@@ -173,9 +173,9 @@ function DetailIllustration() {
             </div>
 
             <Pagination totalPages={totalPages} currentPage={currentPage} handlePageChange={handlePageChange} />
-            <Modal showModal={showModal} setShowModal={setShowModal} category="illustration" onSubmit={handleSubmit} onChange={handleChange} idCategory={id} />
+            <Modal showModal={showModal} setShowModal={setShowModal} category="graphic_design" onSubmit={handleSubmit} onChange={handleChange} idCategory={id} />
         </div>
     );
 }
 
-export default DetailIllustration;
+export default DetailGraphicDesign;

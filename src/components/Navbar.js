@@ -7,20 +7,20 @@ import { ConfirmAlert, SuccessAlert, FailedAlert } from '../components/Swal';
 function Navbar() {
     const location = useLocation();
     const navigate = useNavigate();
-    const isLogin = localStorage.getItem('isLogin');
-
+    const isLogin  = sessionStorage.getItem('isLogin');
+    
     const handleLogout = async () => {
         const isConfirmed = await ConfirmAlert(`Do you want to logout?`);
         if (isConfirmed) {
             try {
-                localStorage.removeItem('isLogin');
+                sessionStorage.removeItem('isLogin');
                 navigate('/login');
                 SuccessAlert(`You have been logged out successfully.`);
             } catch (error) {
                 FailedAlert(`Failed to logout.`);
             }
         }
-    }
+    };
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light container px-5 py-3">
@@ -39,7 +39,6 @@ function Navbar() {
                     <li className={location.pathname === "/web-development" ? "active" : ""}><Link to="/web-development">Web Development</Link></li>
                     {isLogin && (
                         <li className="navbar-right">
-                            <Link to="/admin/comments" className="admin-panel">Admin Panel</Link>
                             <a onClick={handleLogout} className="logout-item">Logout</a>
                         </li>
                     )}

@@ -9,6 +9,7 @@ import Illustration from './pages/Illustration';
 import Photography from './pages/Photography';
 import WebDevelopment from './pages/WebDevelopment';
 import Login from './pages/Login';
+import Admin from './pages/admin/Admin';
 import AdminComments from './pages/admin/Comments';
 import AdminGraphicDesign from './pages/admin/GraphicDesign';
 import AddGraphicDesign from './pages/admin/graphic-design/Add';
@@ -29,8 +30,7 @@ import DetailWebDevelopment from './pages/admin/web-development/Detail';
 import UpdateWebDevelopment from './pages/admin/web-development/Update';
 
 function App() {
-    const isLogin = localStorage.getItem('isLogin');
-
+    const isLogin = sessionStorage.getItem('isLogin');
     return (
         <Router>
             <Navbar />
@@ -41,7 +41,8 @@ function App() {
                 <Route path="/illustration" element={<Illustration />} />
                 <Route path="/photography" element={<Photography />} />
                 <Route path="/web-development" element={<WebDevelopment />} />
-                <Route path="/login" element={!isLogin ? <Login /> : <Navigate to="/admin/comments" />}  />
+                <Route path="/login" element={!isLogin ? <Login /> : <Navigate to="/admin" />}  />
+                <Route path="/admin" element={isLogin ? <Admin /> : <Navigate to="/" />}  />
                 <Route path="/admin/comments" element={isLogin ? <AdminComments /> : <Navigate to="/" />}  />
                 <Route path="/admin/graphic-design" element={isLogin ? <AdminGraphicDesign /> : <Navigate to="/" />}  />
                 <Route path="/admin/graphic-design/add" element={isLogin ? <AddGraphicDesign /> : <Navigate to="/" />}  />

@@ -19,12 +19,15 @@ function DetailIllustration() {
         const getIllustrationCategory = async () => {
             try {
                 const data = await readIllustrationCategory(id);
-                if (data.length > 0) {
-                    setCategoryName(data[0].kategori_illustration);
-                    document.title = `${data[0].kategori_illustration} - Admin Panel`;
+                if (data && data.kategori_illustration) {
+                    setCategoryName(data.kategori_illustration);
+                    document.title = `${data.kategori_illustration} - Admin Panel`;
+                } else {
+                    console.error('Category not found.');
+                    document.title = 'Illustration - Admin Panel';
                 }
             } catch (error) {
-                console.error('Failed to fetch illustration category:', error);
+                console.error('Failed to fetch graphic design category:', error);
                 document.title = 'Illustration - Admin Panel';
             }
         };

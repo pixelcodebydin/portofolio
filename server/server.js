@@ -65,11 +65,11 @@ app.get('/api/count', (req, res) => {
     const query = `
         SELECT 'comment' AS category, COUNT(*) AS count FROM tbl_komentar
         UNION ALL
-        SELECT 'graphic_design' AS category, COUNT(*) AS count FROM tbl_graphic_design
+        SELECT 'graphic_design' AS category, COUNT(*) AS count FROM tbl_file_graphic_design
         UNION ALL
-        SELECT 'illustration' AS category, COUNT(*) AS count FROM tbl_illustration
+        SELECT 'illustration' AS category, COUNT(*) AS count FROM tbl_file_illustration
         UNION ALL
-        SELECT 'ui_ux_design' AS category, COUNT(*) AS count FROM tbl_ui_ux_design
+        SELECT 'ui_ux_design' AS category, COUNT(*) AS count FROM tbl_file_ui_ux_design
         UNION ALL
         SELECT 'photography' AS category, COUNT(*) AS count FROM tbl_photography
         UNION ALL

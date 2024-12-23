@@ -19,12 +19,15 @@ function DetailWebDevelopment() {
         const getWebDevelopmentCategory = async () => {
             try {
                 const data = await readWebDevelopmentCategory(id);
-                if (data.length > 0) {
-                    setWebsiteName(data[0].judul_web_development);
-                    document.title = `${data[0].judul_web_development} - Admin Panel`;
+                if (data && data.judul_web_development) {
+                    setWebsiteName(data.judul_web_development);
+                    document.title = `${data.judul_web_development} - Admin Panel`;
+                } else {
+                    console.error('Category not found.');
+                    document.title = 'Web Development - Admin Panel';
                 }
             } catch (error) {
-                console.error('Failed to fetch website:', error);
+                console.error('Failed to fetch web development project:', error);
                 document.title = 'Web Development - Admin Panel';
             }
         };

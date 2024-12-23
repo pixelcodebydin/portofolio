@@ -10,19 +10,19 @@ function Login() {
     const [email, setEmail]       = useState('');
     const [password, setPassword] = useState('');
     const navigate                = useNavigate();
-    const Email                   = 'official.dindajuliap@gmail.com';
+    const Email                   = 'admin@admin.com';
     const Password                = 'Admin12345*';
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (email === Email && password === Password) {
-            localStorage.setItem('isLogin', true);
-            navigate('/admin/comments');
+            sessionStorage.setItem('isLogin', true);
+            navigate('/admin');
         } else {
             alert("You've entered an incorrect email/password combination.");
         }
     };
-
+    
     return (
         <div className="d-flex justify-content-center align-items-center text-center" style={{ height: '70vh' }}>
             <form onSubmit={ handleSubmit } className="col-xl-4 col-lg-6 col-md-8 col-sm-10 col-xs-12 mx-auto">

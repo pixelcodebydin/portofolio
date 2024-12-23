@@ -6,6 +6,16 @@ footer {
     text-align: center;
 }
 
+.sticky-footer {
+    position: relative;
+}
+
+.absolute-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
 #footer p { 
     text-align: center;
     color: #AFAFAF;

@@ -19,9 +19,12 @@ function DetailGraphicDesign() {
         const getGraphicDesignCategory = async () => {
             try {
                 const data = await readGraphicDesignCategory(id);
-                if (data.length > 0) {
-                    setCategoryName(data[0].kategori_graphic_design);
-                    document.title = `${data[0].kategori_graphic_design} - Admin Panel`;
+                if (data && data.kategori_graphic_design) {
+                    setCategoryName(data.kategori_graphic_design);
+                    document.title = `${data.kategori_graphic_design} - Admin Panel`;
+                } else {
+                    console.error('Category not found.');
+                    document.title = 'Graphic Design - Admin Panel';
                 }
             } catch (error) {
                 console.error('Failed to fetch graphic design category:', error);

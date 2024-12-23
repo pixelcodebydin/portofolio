@@ -19,9 +19,12 @@ function DetailUiuxDesign() {
         const getUiuxDesignCategory = async () => {
             try {
                 const data = await readUiuxDesignCategory(id);
-                if (data.length > 0) {
-                    setCategoryName(data[0].kategori_ui_ux_design);
-                    document.title = `${data[0].kategori_ui_ux_design} - Admin Panel`;
+                if (data && data.kategori_ui_ux_design) {
+                    setCategoryName(data.kategori_ui_ux_design);
+                    document.title = `${data.kategori_ui_ux_design} - Admin Panel`;
+                } else {
+                    console.error('Category not found.');
+                    document.title = 'UI/UX Design - Admin Panel';
                 }
             } catch (error) {
                 console.error('Failed to fetch UI/UX design category:', error);

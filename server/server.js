@@ -61,6 +61,38 @@ const upload_web_development = multer({ storage: storage_web_development });
 app.use(cors());
 app.use(bodyParser.json());
 
+app.get('/api/count', (req, res) => {
+    const query = `
+        SELECT 'comment' AS category, COUNT(*) AS count FROM tbl_komentar
+        UNION ALL
+        SELECT 'graphic_design' AS category, COUNT(*) AS count FROM tbl_graphic_design
+        UNION ALL
+        SELECT 'illustration' AS category, COUNT(*) AS count FROM tbl_illustration
+        UNION ALL
+        SELECT 'ui_ux_design' AS category, COUNT(*) AS count FROM tbl_ui_ux_design
+        UNION ALL
+        SELECT 'photography' AS category, COUNT(*) AS count FROM tbl_photography
+        UNION ALL
+        SELECT 'web_development' AS category, COUNT(*) AS count FROM tbl_web_development
+    `;
+
+    db.query(query, (err, rows) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Database query error' });
+        }
+
+        // Transform the result into an object
+        const results = rows.reduce((acc, row) => {
+            acc[row.category] = row.count;
+            return acc;
+        }, {});
+
+        res.json(results);
+    });
+});
+
+
 app.get('/api/komentar', (req, res) => {
     const query = 'SELECT * FROM tbl_komentar';
     db.query(query, (err, results) => {

@@ -1,22 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, ButtonAction } from '../components/Button';
+import { Button } from '../components/Button';
 
 function Login() {
     useEffect(() => {
         document.title = 'Login - PixelCode by Din';
     }, []);
 
-    const [email, setEmail] = useState('');
+    const [email, setEmail]       = useState('');
     const [password, setPassword] = useState('');
-    const navigate = useNavigate();
-
-    const Email    = 'official.dindajuliap@gmail.com';
-    const Password = 'Admin12345*';
+    const navigate                = useNavigate();
+    const Email                   = 'official.dindajuliap@gmail.com';
+    const Password                = 'Admin12345*';
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
         if (email === Email && password === Password) {
             localStorage.setItem('isLogin', true);
             navigate('/admin/comments');

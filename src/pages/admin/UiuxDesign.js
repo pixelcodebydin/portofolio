@@ -8,10 +8,10 @@ import SearchBar from '../../components/SearchBar';
 import { ConfirmAlert, SuccessAlert, FailedAlert } from '../../components/Swal';
 
 function AdminUiuxDesign() {
-    const [uiuxDesign, setUiuxDesign] = useState([]);
-    const [currentPage, setCurrentPage]     = useState(1);
-    const [searchTerm, setSearchTerm]       = useState('');
-    const uiuxDesignPerPage              = 10;
+    const [uiuxDesign, setUiuxDesign]   = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [searchTerm, setSearchTerm]   = useState('');
+    const uiuxDesignPerPage             = 10;
 
     useEffect(() => {
         document.title = 'UI/UX Design - Admin Panel';
@@ -33,7 +33,7 @@ function AdminUiuxDesign() {
     const lastUiuxDesign    = currentPage * uiuxDesignPerPage;
     const firstUiuxDesign   = lastUiuxDesign - uiuxDesignPerPage;
     const currentUiuxDesign = filteredUiuxDesign.slice(firstUiuxDesign, lastUiuxDesign);
-    const totalPages           = Math.ceil(filteredUiuxDesign.length / uiuxDesignPerPage);
+    const totalPages        = Math.ceil(filteredUiuxDesign.length / uiuxDesignPerPage);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);

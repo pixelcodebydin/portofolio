@@ -22,6 +22,7 @@ import AdminUiuxDesign from './pages/admin/UiuxDesign';
 import AddUiuxDesign from './pages/admin/ui-ux-design/Add';
 import DetailUiuxDesign from './pages/admin/ui-ux-design/Detail';
 import UpdateUiuxDesign from './pages/admin/ui-ux-design/Update';
+import AdminPhotography from './pages/admin/Photography';
 import AdminWebDevelopment from './pages/admin/WebDevelopment';
 import AddWebDevelopment from './pages/admin/web-development/Add';
 import DetailWebDevelopment from './pages/admin/web-development/Detail';
@@ -54,6 +55,7 @@ function App() {
                 <Route path="/admin/ui-ux-design/add" element={isLogin ? <AddUiuxDesign /> : <Navigate to="/" />}  />
                 <Route path="/admin/ui-ux-design/detail/:id" element={isLogin ? <DetailUiuxDesign /> : <Navigate to="/" />}  />
                 <Route path="/admin/ui-ux-design/update/:id" element={isLogin ? <UpdateUiuxDesign /> : <Navigate to="/" />}  />
+                <Route path="/admin/photography" element={isLogin ? <AdminPhotography /> : <Navigate to="/" />}  />
                 <Route path="/admin/web-development" element={isLogin ? <AdminWebDevelopment /> : <Navigate to="/" />}  />
                 <Route path="/admin/web-development/add" element={isLogin ? <AddWebDevelopment /> : <Navigate to="/" />}  />
                 <Route path="/admin/web-development/detail/:id" element={isLogin ? <DetailWebDevelopment /> : <Navigate to="/" />}  />

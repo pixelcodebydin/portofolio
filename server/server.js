@@ -34,6 +34,15 @@ const storage_ui_ux_design = multer.diskStorage({
     }
 });
 
+const storage_photography = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, path.join(__dirname, '../', 'public', 'image', 'photography'));
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + '-' + file.originalname);
+    }
+});
+
 const storage_web_development = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, path.join(__dirname, '../', 'public', 'image', 'web-development'));
@@ -46,6 +55,7 @@ const storage_web_development = multer.diskStorage({
 const upload_graphic_design  = multer({ storage: storage_graphic_design });
 const upload_illustration    = multer({ storage: storage_illustration });
 const upload_ui_ux_design    = multer({ storage: storage_ui_ux_design });
+const upload_photography     = multer({ storage: storage_photography });
 const upload_web_development = multer({ storage: storage_web_development });
 
 app.use(cors());
@@ -706,6 +716,86 @@ app.delete('/api/ui-ux-design/hapus/file/:id', (req, res) => {
             return res.status(404).json({ message: 'File not found' });
         }
         res.status(200).json({ message: 'File deleted successfully' });
+    });
+});
+
+app.get('/api/photography', (req, res) => {
+    const query = 'SELECT * FROM tbl_photography';
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Error fetching photos:', err.message);
+            res.status(500).send({ error: 'Failed to fetch photos.' });
+            return;
+        }
+        res.json(results);
+    });
+});
+
+app.get('/api/photography/aktif/:id', (req, res) => {
+    const { id } = req.params;
+    const query = `SELECT * FROM tbl_photography WHERE id_photography = ? AND status_photography = 1`;
+    db.query(query, [id], (err, results) => {
+        if (err) {
+            console.error(`Error fetching photo with ID ${id}:`, err.message);
+            res.status(500).send({ error: `Failed to fetch photo with ID ${id}.` });
+            return;
+        }
+        res.json(results);
+    });
+});
+
+app.put('/api/photography/:id/:status', (req, res) => {
+    const { id, status } = req.params;
+    const query = `UPDATE tbl_photography SET status_photography = ? WHERE id_photography = ?`;
+    db.query(query, [status, id], (err, results) => {
+        if (err) {
+            console.error('Error updating photo status:', err.message);
+            res.status(500).send('Server error');
+            return;
+        }
+        if (results.affectedRows === 0) {
+            return res.status(404).send('Photo not found');
+        }
+        res.json({ message: 'Status updated successfully' });
+    });
+});
+
+app.post('/api/photography/tambah', upload_photography.single('file_photography'), (req, res) => {
+    const file   = req.file;
+    if (!file) {
+        return res.status(400).json({ error: 'No photo uploaded or invalid photo format' });
+    }
+
+    const query = `
+        INSERT INTO tbl_photography (file_photography, status_photography)
+        VALUES (?, 1)
+    `;
+
+    db.query(query, [file.filename], (err, result) => {
+        if (err) {
+            console.error('Database error:', err.message);
+            return res.status(500).json({ error: 'Internal server error' });
+        }
+        res.status(201).json({ message: 'Photo added successfully', id: result.insertId });
+    });
+});
+
+app.delete('/api/photography/hapus/:id', (req, res) => {
+    const { id } = req.params;
+    if (!id || isNaN(id)) {
+        return res.status(400).json({ message: 'Invalid ID parameter' });
+    }
+
+    const query = `DELETE FROM tbl_photography WHERE id_photography = ?`;
+    db.query(query, [id], (err, results) => {
+        if (err) {
+            console.error('Error deleting photo:', err.message);
+            return res.status(500).json({ message: 'Failed to delete photo', error: err.message });
+        }
+        if (results.affectedRows === 0) {
+            return res.status(404).json({ message: 'Photo not found' });
+        }
+        res.status(200).json({ message: 'Photo deleted successfully' });
     });
 });
 

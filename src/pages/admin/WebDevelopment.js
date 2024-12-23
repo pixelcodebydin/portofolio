@@ -8,10 +8,10 @@ import SearchBar from '../../components/SearchBar';
 import { ConfirmAlert, SuccessAlert, FailedAlert } from '../../components/Swal';
 
 function AdminWebDevelopment() {
-    const [dwebDevelopment, setWebDevelopment] = useState([]);
-    const [currentPage, setCurrentPage]     = useState(1);
-    const [searchTerm, setSearchTerm]       = useState('');
-    const dwebDevelopmentPerPage              = 10;
+    const [webDevelopment, setWebDevelopment] = useState([]);
+    const [currentPage, setCurrentPage]        = useState(1);
+    const [searchTerm, setSearchTerm]          = useState('');
+    const webDevelopmentPerPage               = 10;
 
     useEffect(() => {
         document.title = 'Web Development - Admin Panel';
@@ -26,14 +26,14 @@ function AdminWebDevelopment() {
         getWebDevelopment();
     }, []);
 
-    const filteredWebDevelopment = dwebDevelopment.filter((item) =>
+    const filteredWebDevelopment = webDevelopment.filter((item) =>
         item.judul_web_development.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const lastWebDevelopment    = currentPage * dwebDevelopmentPerPage;
-    const firstWebDevelopment   = lastWebDevelopment - dwebDevelopmentPerPage;
+    const lastWebDevelopment    = currentPage * webDevelopmentPerPage;
+    const firstWebDevelopment   = lastWebDevelopment - webDevelopmentPerPage;
     const currentWebDevelopment = filteredWebDevelopment.slice(firstWebDevelopment, lastWebDevelopment);
-    const totalPages           = Math.ceil(filteredWebDevelopment.length / dwebDevelopmentPerPage);
+    const totalPages            = Math.ceil(filteredWebDevelopment.length / webDevelopmentPerPage);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -127,7 +127,7 @@ function AdminWebDevelopment() {
                         {currentWebDevelopment.length > 0 ? (
                             currentWebDevelopment.map((item, index) => (
                                 <tr key={item.id_web_development} id="baris">
-                                    <td className="text-center">{(currentPage - 1) * dwebDevelopmentPerPage + index + 1}</td>
+                                    <td className="text-center">{(currentPage - 1) * webDevelopmentPerPage + index + 1}</td>
                                     <td>{item.judul_web_development}</td>
                                     <td>{item.deskripsi_web_development}</td>
                                     <td className="text-center">{item.link_web_development ? (<a href={item.link_web_development} target="_blank" rel="noopener noreferrer">See more</a>) : (<></>)}</td>

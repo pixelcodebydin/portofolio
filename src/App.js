@@ -18,6 +18,10 @@ import AdminIllustration from './pages/admin/Illustration';
 import AddIllustration from './pages/admin/illustration/Add';
 import DetailIllustration from './pages/admin/illustration/Detail';
 import UpdateIllustration from './pages/admin/illustration/Update';
+import AdminUiuxDesign from './pages/admin/UiuxDesign';
+import AddUiuxDesign from './pages/admin/ui-ux-design/Add';
+import DetailUiuxDesign from './pages/admin/ui-ux-design/Detail';
+import UpdateUiuxDesign from './pages/admin/ui-ux-design/Update';
 
 function App() {
     const isLogin = localStorage.getItem('isLogin');
@@ -42,6 +46,10 @@ function App() {
                 <Route path="/admin/illustration/add" element={isLogin ? <AddIllustration /> : <Navigate to="/" />}  />
                 <Route path="/admin/illustration/detail/:id" element={isLogin ? <DetailIllustration /> : <Navigate to="/" />}  />
                 <Route path="/admin/illustration/update/:id" element={isLogin ? <UpdateIllustration /> : <Navigate to="/" />}  />
+                <Route path="/admin/ui-ux-design" element={isLogin ? <AdminUiuxDesign /> : <Navigate to="/" />}  />
+                <Route path="/admin/ui-ux-design/add" element={isLogin ? <AddUiuxDesign /> : <Navigate to="/" />}  />
+                <Route path="/admin/ui-ux-design/detail/:id" element={isLogin ? <DetailUiuxDesign /> : <Navigate to="/" />}  />
+                <Route path="/admin/ui-ux-design/update/:id" element={isLogin ? <UpdateUiuxDesign /> : <Navigate to="/" />}  />
             </Routes>
             <Footer />
         </Router>

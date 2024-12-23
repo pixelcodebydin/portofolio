@@ -25,8 +25,18 @@ const storage_illustration = multer.diskStorage({
     }
 });
 
+const storage_ui_ux_design = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, path.join(__dirname, '../', 'public', 'image', 'ui-ux-design'));
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + '-' + file.originalname);
+    }
+});
+
 const upload_graphic_design = multer({ storage: storage_graphic_design });
-const upload_illustration = multer({ storage: storage_illustration });
+const upload_illustration   = multer({ storage: storage_illustration });
+const upload_ui_ux_design   = multer({ storage: storage_ui_ux_design });
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -467,6 +477,216 @@ app.delete('/api/ilustrasi/hapus/file/:id', (req, res) => {
     }
 
     const query = `DELETE FROM tbl_file_illustration WHERE id_file_illustration = ?`;
+    db.query(query, [id], (err, results) => {
+        if (err) {
+            console.error('Error deleting file:', err.message);
+            return res.status(500).json({ message: 'Failed to delete file', error: err.message });
+        }
+        if (results.affectedRows === 0) {
+            return res.status(404).json({ message: 'File not found' });
+        }
+        res.status(200).json({ message: 'File deleted successfully' });
+    });
+});
+
+app.get('/api/ui-ux-design', (req, res) => {
+    const query = 'SELECT * FROM tbl_ui_ux_design';
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Error fetching categories:', err.message);
+            res.status(500).send({ error: 'Failed to fetch categories.' });
+            return;
+        }
+        res.json(results);
+    });
+});
+
+app.get('/api/ui-ux-design/kategori/:id', (req, res) => {
+    const { id } = req.params;
+    const query = `SELECT * FROM tbl_ui_ux_design WHERE id_ui_ux_design = ?`;
+    db.query(query, [id], (err, results) => {
+        if (err) {
+            console.error(`Error fetching category with ID ${id}:`, err.message);
+            res.status(500).send({ error: `Failed to fetch category with ID ${id}.` });
+            return;
+        }
+        if (results.length === 0) {
+            res.status(404).send({ error: `Category with ID ${id} not found.` });
+            return;
+        }
+        console.log('Database results:', results[0]);
+        res.json(results[0]);
+    });
+});
+
+app.get('/api/ui-ux-design/aktif', (req, res) => {
+    const query = `SELECT * FROM tbl_ui_ux_design WHERE status_ui_ux_design = 1`;
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error(`Error fetching the active category:`, err.message);
+            res.status(500).send({ error: `Failed to fetch the active category.` });
+            return;
+        }
+        res.json(results);
+    });
+});
+
+app.get('/api/ui-ux-design/file/:id', (req, res) => {
+    const { id } = req.params;
+    const query = `SELECT * FROM tbl_file_ui_ux_design WHERE id_ui_ux_design = ${id}`;
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error(`Error fetching file with ID ${id}:`, err.message);
+            res.status(500).send({ error: `Failed to fetch file with ID ${id}.` });
+            return;
+        }
+        res.json(results);
+    });
+});
+
+app.get('/api/ui-ux-design/file-aktif/:id', (req, res) => {
+    const { id } = req.params;
+    const query = `SELECT * FROM tbl_file_ui_ux_design WHERE id_ui_ux_design = ? AND status_file_ui_ux_design = 1`;
+    db.query(query, [id], (err, results) => {
+        if (err) {
+            console.error(`Error fetching file with ID ${id}:`, err.message);
+            res.status(500).send({ error: `Failed to fetch file with ID ${id}.` });
+            return;
+        }
+        res.json(results);
+    });
+});
+
+app.put('/api/ui-ux-design/:id/:status', (req, res) => {
+    const { id, status } = req.params;
+    const query = `UPDATE tbl_ui_ux_design SET status_ui_ux_design = ? WHERE id_ui_ux_design = ?`;
+    db.query(query, [status, id], (err, results) => {
+        if (err) {
+            console.error('Error updating category status:', err.message);
+            res.status(500).send('Server error');
+            return;
+        }
+        if (results.affectedRows === 0) {
+            return res.status(404).send('Category not found');
+        }
+        res.json({ message: 'Status updated successfully' });
+    });
+});
+
+app.put('/api/ui-ux-design/file/:id/:status', (req, res) => {
+    const { id, status } = req.params;
+    const query = `UPDATE tbl_file_ui_ux_design SET status_file_ui_ux_design = ? WHERE id_file_ui_ux_design = ?`;
+    db.query(query, [status, id], (err, results) => {
+        if (err) {
+            console.error('Error updating file status:', err.message);
+            res.status(500).send('Server error');
+            return;
+        }
+        if (results.affectedRows === 0) {
+            return res.status(404).send('File not found');
+        }
+        res.json({ message: 'Status updated successfully' });
+    });
+});
+
+app.post('/api/ui-ux-design/tambah', (req, res) => {
+    const { kategori_ui_ux_design, deskripsi_ui_ux_design, link_ui_ux_design } = req.body;
+    if (!kategori_ui_ux_design || !deskripsi_ui_ux_design || !link_ui_ux_design) {
+        return res.status(400).json({ error: 'All fields are required' });
+    }
+
+    const query = `
+        INSERT INTO tbl_ui_ux_design (kategori_ui_ux_design, deskripsi_ui_ux_design, link_ui_ux_design, status_ui_ux_design)
+        VALUES (?, ?, ?, 1)
+    `;
+
+    db.query(query, [kategori_ui_ux_design, deskripsi_ui_ux_design, link_ui_ux_design], (err, result) => {
+        if (err) {
+            console.error('Error inserting data:', err);
+            return res.status(500).json({ error: 'Failed to insert data' });
+        }
+        res.status(201).json({ message: 'Category added successfully', id: result.insertId });
+    });
+});
+
+app.post('/api/ui-ux-design/tambah/file/:id', upload_ui_ux_design.single('file_ui_ux_design'), (req, res) => {
+    const { id } = req.params;
+    const file   = req.file;
+    if (!file) {
+        return res.status(400).json({ error: 'No file uploaded or invalid file format' });
+    }
+
+    const query = `
+        INSERT INTO tbl_file_ui_ux_design (id_ui_ux_design, file_ui_ux_design, status_file_ui_ux_design)
+        VALUES (?, ?, 1)
+    `;
+
+    db.query(query, [id, file.filename], (err, result) => {
+        if (err) {
+            console.error('Database error:', err.message);
+            return res.status(500).json({ error: 'Internal server error' });
+        }
+        res.status(201).json({ message: 'File added successfully', id: result.insertId });
+    });
+});
+
+app.put('/api/ui-ux-design/ubah', (req, res) => {
+    const { id, kategori_ui_ux_design, deskripsi_ui_ux_design, link_ui_ux_design } = req.body;
+    if (!id || !kategori_ui_ux_design || !deskripsi_ui_ux_design || !link_ui_ux_design) {
+        return res.status(400).json({ message: 'All fields are required.' });
+    }
+
+    const query = `
+        UPDATE tbl_ui_ux_design SET kategori_ui_ux_design = ?, deskripsi_ui_ux_design = ?, link_ui_ux_design = ? 
+        WHERE id_ui_ux_design = ?
+    `;
+
+    db.query(query, [kategori_ui_ux_design, deskripsi_ui_ux_design, link_ui_ux_design, id], (err, results) => {
+        if (err) {
+            console.error('Error updating category:', err.message);
+            return res.status(500).json({ message: 'Failed to update category.', error: err.message });
+        }
+        if (results.affectedRows === 0) {
+            return res.status(404).json({ message: 'Category not found.' });
+        }
+        res.status(200).json({ message: 'Category updated successfully.' });
+    });
+});
+
+app.delete('/api/ui-ux-design/hapus/:id', (req, res) => {
+    const { id } = req.params;
+    if (!id || isNaN(id)) {
+        return res.status(400).json({ message: 'Invalid ID parameter' });
+    }
+
+    const deleteFileQuery = `DELETE FROM tbl_file_ui_ux_design WHERE id_ui_ux_design = ?`;
+    db.query(deleteFileQuery, [id], (err, fileResults) => {
+        if (err) {
+            console.error('Error deleting files related to the UI/UX design:', err.message);
+            return res.status(500).json({ message: 'Failed to delete related files', error: err.message });
+        }
+
+        const deleteQuery = `DELETE FROM tbl_ui_ux_design WHERE id_ui_ux_design = ?`;
+        db.query(deleteQuery, [id], (err, uiuxDesignResults) => {
+            if (err) {
+                console.error('Error deleting file:', err.message);
+                return res.status(500).json({ message: 'Failed to delete category', error: err.message });
+            }
+            if (uiuxDesignResults.affectedRows === 0) {
+                return res.status(404).json({ message: 'Category not found' });
+            }
+            res.status(200).json({ message: 'Category and related files deleted successfully' });
+        });
+    });
+});
+
+app.delete('/api/ui-ux-design/hapus/file/:id', (req, res) => {
+    const { id } = req.params;
+    if (!id || isNaN(id)) {
+        return res.status(400).json({ message: 'Invalid ID parameter' });
+    }
+
+    const query = `DELETE FROM tbl_file_ui_ux_design WHERE id_file_ui_ux_design = ?`;
     db.query(query, [id], (err, results) => {
         if (err) {
             console.error('Error deleting file:', err.message);

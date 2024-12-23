@@ -60,7 +60,7 @@ function UpdateIllustration() {
                 <label className="mt-2"><b>Category Description</b></label>
                 <textarea className="form-control mt-2" name="deskripsi_illustration" value={formData.deskripsi_illustration} rows="5" style={{resize: 'none'}} onChange={handleChange}></textarea>
 
-                <label className="mt-2"><b>Link to Your Portofolio</b></label>
+                <label className="mt-2"><b>Link to Your Portfolio</b></label>
                 <input type="text" className="form-control mt-2" name="link_illustration" value={formData.link_illustration} onChange={handleChange} />
 
                 <button type="submit" className="mt-3 btn" style={{background: '#FF8500', color: 'white'}}>Save</button>

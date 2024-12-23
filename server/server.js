@@ -34,9 +34,19 @@ const storage_ui_ux_design = multer.diskStorage({
     }
 });
 
-const upload_graphic_design = multer({ storage: storage_graphic_design });
-const upload_illustration   = multer({ storage: storage_illustration });
-const upload_ui_ux_design   = multer({ storage: storage_ui_ux_design });
+const storage_web_development = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, path.join(__dirname, '../', 'public', 'image', 'web-development'));
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + '-' + file.originalname);
+    }
+});
+
+const upload_graphic_design  = multer({ storage: storage_graphic_design });
+const upload_illustration    = multer({ storage: storage_illustration });
+const upload_ui_ux_design    = multer({ storage: storage_ui_ux_design });
+const upload_web_development = multer({ storage: storage_web_development });
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -687,6 +697,216 @@ app.delete('/api/ui-ux-design/hapus/file/:id', (req, res) => {
     }
 
     const query = `DELETE FROM tbl_file_ui_ux_design WHERE id_file_ui_ux_design = ?`;
+    db.query(query, [id], (err, results) => {
+        if (err) {
+            console.error('Error deleting file:', err.message);
+            return res.status(500).json({ message: 'Failed to delete file', error: err.message });
+        }
+        if (results.affectedRows === 0) {
+            return res.status(404).json({ message: 'File not found' });
+        }
+        res.status(200).json({ message: 'File deleted successfully' });
+    });
+});
+
+app.get('/api/web-development', (req, res) => {
+    const query = 'SELECT * FROM tbl_web_development';
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Error fetching categories:', err.message);
+            res.status(500).send({ error: 'Failed to fetch categories.' });
+            return;
+        }
+        res.json(results);
+    });
+});
+
+app.get('/api/web-development/kategori/:id', (req, res) => {
+    const { id } = req.params;
+    const query = `SELECT * FROM tbl_web_development WHERE id_web_development = ?`;
+    db.query(query, [id], (err, results) => {
+        if (err) {
+            console.error(`Error fetching category with ID ${id}:`, err.message);
+            res.status(500).send({ error: `Failed to fetch category with ID ${id}.` });
+            return;
+        }
+        if (results.length === 0) {
+            res.status(404).send({ error: `Category with ID ${id} not found.` });
+            return;
+        }
+        console.log('Database results:', results[0]);
+        res.json(results[0]);
+    });
+});
+
+app.get('/api/web-development/aktif', (req, res) => {
+    const query = `SELECT * FROM tbl_web_development WHERE status_web_development = 1`;
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error(`Error fetching the active category:`, err.message);
+            res.status(500).send({ error: `Failed to fetch the active category.` });
+            return;
+        }
+        res.json(results);
+    });
+});
+
+app.get('/api/web-development/file/:id', (req, res) => {
+    const { id } = req.params;
+    const query = `SELECT * FROM tbl_file_web_development WHERE id_web_development = ${id}`;
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error(`Error fetching file with ID ${id}:`, err.message);
+            res.status(500).send({ error: `Failed to fetch file with ID ${id}.` });
+            return;
+        }
+        res.json(results);
+    });
+});
+
+app.get('/api/web-development/file-aktif/:id', (req, res) => {
+    const { id } = req.params;
+    const query = `SELECT * FROM tbl_file_web_development WHERE id_web_development = ? AND status_file_web_development = 1`;
+    db.query(query, [id], (err, results) => {
+        if (err) {
+            console.error(`Error fetching file with ID ${id}:`, err.message);
+            res.status(500).send({ error: `Failed to fetch file with ID ${id}.` });
+            return;
+        }
+        res.json(results);
+    });
+});
+
+app.put('/api/web-development/:id/:status', (req, res) => {
+    const { id, status } = req.params;
+    const query = `UPDATE tbl_web_development SET status_web_development = ? WHERE id_web_development = ?`;
+    db.query(query, [status, id], (err, results) => {
+        if (err) {
+            console.error('Error updating category status:', err.message);
+            res.status(500).send('Server error');
+            return;
+        }
+        if (results.affectedRows === 0) {
+            return res.status(404).send('Category not found');
+        }
+        res.json({ message: 'Status updated successfully' });
+    });
+});
+
+app.put('/api/web-development/file/:id/:status', (req, res) => {
+    const { id, status } = req.params;
+    const query = `UPDATE tbl_file_web_development SET status_file_web_development = ? WHERE id_file_web_development = ?`;
+    db.query(query, [status, id], (err, results) => {
+        if (err) {
+            console.error('Error updating file status:', err.message);
+            res.status(500).send('Server error');
+            return;
+        }
+        if (results.affectedRows === 0) {
+            return res.status(404).send('File not found');
+        }
+        res.json({ message: 'Status updated successfully' });
+    });
+});
+
+app.post('/api/web-development/tambah', (req, res) => {
+    const { judul_web_development, deskripsi_web_development, link_web_development } = req.body;
+    if (!judul_web_development || !deskripsi_web_development || !link_web_development) {
+        return res.status(400).json({ error: 'All fields are required' });
+    }
+
+    const query = `
+        INSERT INTO tbl_web_development (judul_web_development, deskripsi_web_development, link_web_development, status_web_development)
+        VALUES (?, ?, ?, 1)
+    `;
+
+    db.query(query, [judul_web_development, deskripsi_web_development, link_web_development], (err, result) => {
+        if (err) {
+            console.error('Error inserting data:', err);
+            return res.status(500).json({ error: 'Failed to insert data' });
+        }
+        res.status(201).json({ message: 'Category added successfully', id: result.insertId });
+    });
+});
+
+app.post('/api/web-development/tambah/file/:id', upload_web_development.single('file_web_development'), (req, res) => {
+    const { id } = req.params;
+    const file   = req.file;
+    if (!file) {
+        return res.status(400).json({ error: 'No file uploaded or invalid file format' });
+    }
+
+    const query = `
+        INSERT INTO tbl_file_web_development (id_web_development, file_web_development, status_file_web_development)
+        VALUES (?, ?, 1)
+    `;
+
+    db.query(query, [id, file.filename], (err, result) => {
+        if (err) {
+            console.error('Database error:', err.message);
+            return res.status(500).json({ error: 'Internal server error' });
+        }
+        res.status(201).json({ message: 'File added successfully', id: result.insertId });
+    });
+});
+
+app.put('/api/web-development/ubah', (req, res) => {
+    const { id, judul_web_development, deskripsi_web_development, link_web_development } = req.body;
+    if (!id || !judul_web_development || !deskripsi_web_development || !link_web_development) {
+        return res.status(400).json({ message: 'All fields are required.' });
+    }
+
+    const query = `
+        UPDATE tbl_web_development SET judul_web_development = ?, deskripsi_web_development = ?, link_web_development = ? 
+        WHERE id_web_development = ?
+    `;
+
+    db.query(query, [judul_web_development, deskripsi_web_development, link_web_development, id], (err, results) => {
+        if (err) {
+            console.error('Error updating category:', err.message);
+            return res.status(500).json({ message: 'Failed to update category.', error: err.message });
+        }
+        if (results.affectedRows === 0) {
+            return res.status(404).json({ message: 'Category not found.' });
+        }
+        res.status(200).json({ message: 'Category updated successfully.' });
+    });
+});
+
+app.delete('/api/web-development/hapus/:id', (req, res) => {
+    const { id } = req.params;
+    if (!id || isNaN(id)) {
+        return res.status(400).json({ message: 'Invalid ID parameter' });
+    }
+
+    const deleteFileQuery = `DELETE FROM tbl_file_web_development WHERE id_web_development = ?`;
+    db.query(deleteFileQuery, [id], (err, fileResults) => {
+        if (err) {
+            console.error('Error deleting files related to the web development:', err.message);
+            return res.status(500).json({ message: 'Failed to delete related files', error: err.message });
+        }
+
+        const deleteQuery = `DELETE FROM tbl_web_development WHERE id_web_development = ?`;
+        db.query(deleteQuery, [id], (err, webDevelopmentResults) => {
+            if (err) {
+                console.error('Error deleting file:', err.message);
+                return res.status(500).json({ message: 'Failed to delete category', error: err.message });
+            }
+            if (webDevelopmentResults.affectedRows === 0) {
+                return res.status(404).json({ message: 'Category not found' });
+            }
+            res.status(200).json({ message: 'Category and related files deleted successfully' });
+        });
+    });
+});
+
+app.delete('/api/web-development/hapus/file/:id', (req, res) => {
+    const { id } = req.params;
+    if (!id || isNaN(id)) {
+        return res.status(400).json({ message: 'Invalid ID parameter' });
+    }
+
+    const query = `DELETE FROM tbl_file_web_development WHERE id_file_web_development = ?`;
     db.query(query, [id], (err, results) => {
         if (err) {
             console.error('Error deleting file:', err.message);

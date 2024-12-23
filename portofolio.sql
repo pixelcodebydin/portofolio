@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 20, 2024 at 11:33 AM
+-- Generation Time: Dec 23, 2024 at 05:56 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -160,7 +160,7 @@ INSERT INTO `tbl_file_web_development` (`id_file_web_development`, `id_web_devel
 
 CREATE TABLE `tbl_graphic_design` (
   `id_graphic_design` int(11) NOT NULL,
-  `judul_graphic_design` varchar(100) NOT NULL,
+  `kategori_graphic_design` varchar(100) NOT NULL,
   `deskripsi_graphic_design` text NOT NULL,
   `link_graphic_design` text DEFAULT NULL,
   `status_graphic_design` int(1) NOT NULL
@@ -170,7 +170,7 @@ CREATE TABLE `tbl_graphic_design` (
 -- Dumping data for table `tbl_graphic_design`
 --
 
-INSERT INTO `tbl_graphic_design` (`id_graphic_design`, `judul_graphic_design`, `deskripsi_graphic_design`, `link_graphic_design`, `status_graphic_design`) VALUES
+INSERT INTO `tbl_graphic_design` (`id_graphic_design`, `kategori_graphic_design`, `deskripsi_graphic_design`, `link_graphic_design`, `status_graphic_design`) VALUES
 (1, 'Logo Design', 'Explore my collection of logo designs and branding projects that capture the essence of each client’s vision. From startups to established businesses, my designs focus on creating strong, recognizable brand identities that leave a lasting impression.', 'https://drive.google.com/drive/folders/1_P8w6Ak6JnUpHMC8CZMCkKyJgt4iAWRS?usp=drive_link', 1),
 (2, 'Social Media Content', 'Explore my portfolio of social media content design created for educational and community organizations like MAN 2 Model Medan, PEMA Fasilom-TI, and Rumah Izin. These posts are designed to reflect the values and missions of each organization, fostering community engagement.', 'https://drive.google.com/drive/folders/1kccMlhMNmr3262uKcVyhdfDaKbsRfBho?usp=drive_link', 1),
 (3, 'Twibbon', 'Explore a collection of custom twibbon designs tailored to enhance social media events. My designs combine aesthetic appeal with strong messaging to help you achieve your engagement goals.', 'https://drive.google.com/drive/folders/13bML_DLxHab-rlmWmzPHepwD6hC12jc4?usp=drive_link', 1),
@@ -186,7 +186,7 @@ INSERT INTO `tbl_graphic_design` (`id_graphic_design`, `judul_graphic_design`, `
 
 CREATE TABLE `tbl_illustration` (
   `id_illustration` int(11) NOT NULL,
-  `judul_illustration` varchar(100) NOT NULL,
+  `kategori_illustration` varchar(100) NOT NULL,
   `deskripsi_illustration` text NOT NULL,
   `link_illustration` text DEFAULT NULL,
   `status_illustration` int(1) NOT NULL
@@ -196,7 +196,7 @@ CREATE TABLE `tbl_illustration` (
 -- Dumping data for table `tbl_illustration`
 --
 
-INSERT INTO `tbl_illustration` (`id_illustration`, `judul_illustration`, `deskripsi_illustration`, `link_illustration`, `status_illustration`) VALUES
+INSERT INTO `tbl_illustration` (`id_illustration`, `kategori_illustration`, `deskripsi_illustration`, `link_illustration`, `status_illustration`) VALUES
 (1, 'Vector Art', 'Combining artistry and technology, I create detailed vector portraits that highlight the unique features and personality of each subject. These digital artworks are versatile, scalable, and perfect for various applications, from custom illustrations to corporate projects.', 'https://drive.google.com/drive/folders/1oRhpiPqMqVViGVDZ_fmivbjRv_UpWrJ5?usp=drive_link', 1),
 (2, 'Microstock', 'Access a curated portfolio of innovative microstock illustrations that bring creativity and versatility to your projects. Each piece is designed to provide visual interest and support diverse themes, making them ideal for a wide range of uses.', 'https://drive.google.com/drive/folders/1_mKk-EgIt_K95cV7HIZLWoAX9EUu3ICi?usp=drive_link', 1),
 (3, 'Storyboard', 'Specializing in the art of visual storytelling, I create detailed storyboards that transform concepts into compelling short videos. Each frame is meticulously designed to ensure a seamless flow of scenes, delivering a clear and impactful narrative.', 'https://drive.google.com/drive/folders/1c_qNqTWWuferz0AK9nYoO_iS6h919p_d?usp=drive_link', 1),
@@ -258,7 +258,7 @@ INSERT INTO `tbl_photography` (`id_photography`, `file_photography`, `status_pho
 
 CREATE TABLE `tbl_ui_ux_design` (
   `id_ui_ux_design` int(11) NOT NULL,
-  `judul_ui_ux_design` varchar(100) NOT NULL,
+  `kategori_ui_ux_design` varchar(100) NOT NULL,
   `deskripsi_ui_ux_design` text NOT NULL,
   `link_ui_ux_design` text DEFAULT NULL,
   `status_ui_ux_design` int(1) NOT NULL
@@ -268,7 +268,7 @@ CREATE TABLE `tbl_ui_ux_design` (
 -- Dumping data for table `tbl_ui_ux_design`
 --
 
-INSERT INTO `tbl_ui_ux_design` (`id_ui_ux_design`, `judul_ui_ux_design`, `deskripsi_ui_ux_design`, `link_ui_ux_design`, `status_ui_ux_design`) VALUES
+INSERT INTO `tbl_ui_ux_design` (`id_ui_ux_design`, `kategori_ui_ux_design`, `deskripsi_ui_ux_design`, `link_ui_ux_design`, `status_ui_ux_design`) VALUES
 (1, 'Web Design', 'Highlighting a range of web designs crafted according to detailed client briefs. Each design is a testament to my commitment to translating client ideas into visually compelling and user-friendly websites.', 'https://drive.google.com/drive/folders/1wQ_UpaKtWixyiWXsj85OaDuRe7aZusA1?usp=drive_link', 1),
 (2, 'Mobile App Design', 'Browse through my mobile app design projects where functionality meets style. Each design is meticulously crafted to provide a visually appealing and user-friendly experience, enhancing overall app performance.', 'https://drive.google.com/drive/folders/18k6HukApHcGJ9gWvkJqY0AmTJdobNydc?usp=drive_link', 1);
 

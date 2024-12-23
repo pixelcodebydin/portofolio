@@ -150,7 +150,7 @@ function DetailUiuxDesign() {
                             currentUiuxDesignFile.map((item, index) => (
                                 <tr key={item.id_file_ui_ux_design}>
                                     <td className="text-center">{(currentPage - 1) * uiuxDesignFilePerPage + index + 1}</td>
-                                    <td style={{width: '30rem'}}>
+                                    <td style={{width: '25rem'}}>
                                         <img src={`/image/ui-ux-design/${item.file_ui_ux_design}`} style={{width: '100%', borderRadius: '0.5rem'}} />
                                     </td>
                                     

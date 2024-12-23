@@ -150,7 +150,7 @@ function DetailGraphicDesign() {
                             currentGraphicDesignFile.map((item, index) => (
                                 <tr key={item.id_file_graphic_design}>
                                     <td className="text-center">{(currentPage - 1) * graphicDesignFilePerPage + index + 1}</td>
-                                    <td style={{width: '30rem'}}>
+                                    <td style={{width: '25rem'}}>
                                         <img src={`/image/graphic-design/${item.file_graphic_design}`} style={{width: '100%', borderRadius: '0.5rem'}} />
                                     </td>
                                     

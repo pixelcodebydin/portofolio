@@ -150,7 +150,7 @@ function DetailWebDevelopment() {
                             currentWebDevelopmentFile.map((item, index) => (
                                 <tr key={item.id_file_web_development}>
                                     <td className="text-center">{(currentPage - 1) * webDevelopmentFilePerPage + index + 1}</td>
-                                    <td style={{width: '30rem'}}>
+                                    <td style={{width: '25rem'}}>
                                         <img src={`/image/web-development/${item.file_web_development}`} style={{width: '100%', borderRadius: '0.5rem'}} />
                                     </td>
                                     

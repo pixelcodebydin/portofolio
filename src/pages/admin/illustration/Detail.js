@@ -150,7 +150,7 @@ function DetailIllustration() {
                             currentIllustrationFile.map((item, index) => (
                                 <tr key={item.id_file_illustration}>
                                     <td className="text-center">{(currentPage - 1) * illustrationFilePerPage + index + 1}</td>
-                                    <td style={{width: '30rem'}}>
+                                    <td style={{width: '25rem'}}>
                                         <img src={`/image/illustration/${item.file_illustration}`} style={{width: '100%', borderRadius: '0.5rem'}} />
                                     </td>
                                     

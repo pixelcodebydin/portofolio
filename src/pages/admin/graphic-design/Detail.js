@@ -63,11 +63,10 @@ function DetailGraphicDesign() {
         }
     
         const formData = new FormData();
-        formData.append('id_graphic_design', id);
         formData.append('file_graphic_design', file);
     
         try {
-            await addGraphicDesignFile(formData);
+            await addGraphicDesignFile(id, formData);
             SuccessAlert('File added successfully!');
         } catch (error) {
             console.error('Error uploading file:', error.message);
@@ -173,7 +172,7 @@ function DetailGraphicDesign() {
             </div>
 
             <Pagination totalPages={totalPages} currentPage={currentPage} handlePageChange={handlePageChange} />
-            <Modal showModal={showModal} setShowModal={setShowModal} category="graphic_design" onSubmit={handleSubmit} onChange={handleChange} idCategory={id} />
+            <Modal showModal={showModal} setShowModal={setShowModal} category="graphic_design" onSubmit={handleSubmit} onChange={handleChange} />
         </div>
     );
 }

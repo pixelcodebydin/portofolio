@@ -1,11 +1,11 @@
 import React from 'react';
 import './css/Modal.css';
 
-function ModalAddFile({ showModal, setShowModal, category, onSubmit, onChange, idCategory }) {
+function ModalAddFile({ showModal, setShowModal, category, onSubmit, onChange }) {
     return (
         <>
-            {showModal && <div className="modal-overlay"></div>} {/* Conditionally render overlay */}
-            <div className={`modal fade ${showModal ? 'show d-block' : ''}`} tabIndex="-1" aria-hidden="true" style={{ display: showModal ? 'block' : 'none' }}>
+            {showModal && <div className="modal-overlay"></div>}
+            <div className={`modal fade ${showModal ? 'show d-block' : ''}`} tabIndex="-1" style={{ display: showModal ? 'block' : 'none' }}>
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -16,7 +16,6 @@ function ModalAddFile({ showModal, setShowModal, category, onSubmit, onChange, i
                         <form onSubmit={onSubmit}>
                             <div className="modal-body">
                                 <div className="mb-2">
-                                    <input type="hidden" value={idCategory} name="id_illustration" />
                                     <label><b>Upload File</b></label>
                                     <input type="file" className="form-control mt-2" name={`file_${category}`} accept="image/jpeg, image/jpg, image/png" onChange={onChange} />
                                 </div>

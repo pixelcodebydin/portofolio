@@ -45,7 +45,7 @@ function DetailIllustration() {
     const lastIllustrationFile    = currentPage * illustrationFilePerPage;
     const firstIllustrationFile   = lastIllustrationFile - illustrationFilePerPage;
     const currentIllustrationFile = illustration.slice(firstIllustrationFile, lastIllustrationFile);
-    const totalPages              = Math.ceil(illustration.length / illustrationFilePerPage);
+    const totalPages               = Math.ceil(illustration.length / illustrationFilePerPage);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -63,11 +63,10 @@ function DetailIllustration() {
         }
     
         const formData = new FormData();
-        formData.append('id_illustration', id);
         formData.append('file_illustration', file);
     
         try {
-            await addIllustrationFile(formData);
+            await addIllustrationFile(id, formData);
             SuccessAlert('File added successfully!');
         } catch (error) {
             console.error('Error uploading file:', error.message);
@@ -173,7 +172,7 @@ function DetailIllustration() {
             </div>
 
             <Pagination totalPages={totalPages} currentPage={currentPage} handlePageChange={handlePageChange} />
-            <Modal showModal={showModal} setShowModal={setShowModal} category="illustration" onSubmit={handleSubmit} onChange={handleChange} idCategory={id} />
+            <Modal showModal={showModal} setShowModal={setShowModal} category="illustration" onSubmit={handleSubmit} onChange={handleChange} />
         </div>
     );
 }

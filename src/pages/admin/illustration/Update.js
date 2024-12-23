@@ -4,8 +4,8 @@ import { updateIllustrationCategory, readIllustrationCategory } from '../../../a
 import { SuccessAlert, FailedAlert } from '../../../components/Swal';
 
 function UpdateIllustration() {
-    const { id }                  = useParams();
-    const navigate                = useNavigate();
+    const { id } = useParams();
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         kategori_illustration: '',
         deskripsi_illustration: '',
@@ -17,12 +17,14 @@ function UpdateIllustration() {
         const getIllustrationFile = async () => {
             try {
                 const response = await readIllustrationCategory(id);
+                const data = Array.isArray(response) ? response[0] : response;
                 setFormData({
-                    kategori_illustration: response.kategori_illustration,
-                    deskripsi_illustration: response.deskripsi_illustration,
-                    link_illustration: response.link_illustration,
+                    kategori_illustration: data.kategori_illustration || '',
+                    deskripsi_illustration: data.deskripsi_illustration || '',
+                    link_illustration: data.link_illustration || '',
                 });
             } catch (error) {
+                console.error('Error fetching illustration data:', error);
                 FailedAlert('Failed to fetch illustration data.');
                 navigate('/admin/illustration');
             }
@@ -43,6 +45,7 @@ function UpdateIllustration() {
             SuccessAlert('Category updated successfully!');
             navigate('/admin/illustration');
         } catch (error) {
+            console.error('Error updating illustration category:', error);
             FailedAlert('Failed to update the category. Please try again.');
         }
     };
@@ -55,7 +58,7 @@ function UpdateIllustration() {
                 <input type="text" className="form-control mt-2" name="kategori_illustration" maxLength="100" value={formData.kategori_illustration} onChange={handleChange} />
 
                 <label className="mt-2"><b>Category Description</b></label>
-                <textarea className="form-control mt-2" name="deskripsi_illustration" rows="5" style={{resize: 'none'}} value={formData.deskripsi_illustration} onChange={handleChange}></textarea>
+                <textarea className="form-control mt-2" name="deskripsi_illustration" value={formData.deskripsi_illustration} rows="5" style={{resize: 'none'}} onChange={handleChange}></textarea>
 
                 <label className="mt-2"><b>Link to Your Portofolio</b></label>
                 <input type="text" className="form-control mt-2" name="link_illustration" value={formData.link_illustration} onChange={handleChange} />

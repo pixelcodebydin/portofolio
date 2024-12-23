@@ -61,9 +61,9 @@ export const addIllustration = async (data) => {
     }
 };
 
-export const addIllustrationFile = async (data) => {
+export const addIllustrationFile = async (id, data) => {
     try {
-        const response = await axios.post(`${API_URL}/ilustrasi/tambah/file`, data, {
+        const response = await axios.post(`${API_URL}/ilustrasi/tambah/file/${id}`, data, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },

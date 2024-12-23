@@ -61,9 +61,9 @@ export const addGraphicDesign = async (data) => {
     }
 };
 
-export const addGraphicDesignFile = async (data) => {
+export const addGraphicDesignFile = async (id, data) => {
     try {
-        const response = await axios.post(`${API_URL}/graphic-design/tambah/file`, data, {
+        const response = await axios.post(`${API_URL}/graphic-design/tambah/file/${id}`, data, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },

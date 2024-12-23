@@ -9,9 +9,9 @@ import { ConfirmAlert, SuccessAlert, FailedAlert } from '../../components/Swal';
 
 function AdminIllustration() {
     const [illustration, setIllustration] = useState([]);
-    const [currentPage, setCurrentPage]   = useState(1);
-    const [searchTerm, setSearchTerm]     = useState('');
-    const illustrationPerPage             = 10;
+    const [currentPage, setCurrentPage]     = useState(1);
+    const [searchTerm, setSearchTerm]       = useState('');
+    const illustrationPerPage              = 10;
 
     useEffect(() => {
         document.title = 'Illustration - Admin Panel';
@@ -33,7 +33,7 @@ function AdminIllustration() {
     const lastIllustration    = currentPage * illustrationPerPage;
     const firstIllustration   = lastIllustration - illustrationPerPage;
     const currentIllustration = filteredIllustration.slice(firstIllustration, lastIllustration);
-    const totalPages          = Math.ceil(filteredIllustration.length / illustrationPerPage);
+    const totalPages           = Math.ceil(filteredIllustration.length / illustrationPerPage);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);

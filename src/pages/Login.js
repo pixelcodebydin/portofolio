@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/Button';
+import { SuccessAlert, FailedAlert } from '../components/Swal';
 
 function Login() {
     useEffect(() => {
@@ -17,9 +18,10 @@ function Login() {
         e.preventDefault();
         if (email === Email && password === Password) {
             sessionStorage.setItem('isLogin', true);
-            navigate('/admin');
+            SuccessAlert('Welcome, Admin!');
+            navigate('/');
         } else {
-            alert("You've entered an incorrect email/password combination.");
+            FailedAlert("You've entered an incorrect email/password.");
         }
     };
     

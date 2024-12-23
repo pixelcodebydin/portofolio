@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Button, ButtonAction } from '../components/Button';
+import { Button } from '../components/Button';
 
 function Photography() {
     useEffect(() => {

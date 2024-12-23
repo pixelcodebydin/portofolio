@@ -38,7 +38,7 @@ nav .navbar-right {
     margin-left: auto;
 }
 
-.logout-item {
+.logout-item, .admin-panel {
     text-decoration: none;
     cursor: pointer;
     color: #AFAFAF;
@@ -46,4 +46,8 @@ nav .navbar-right {
 
 .logout-item {
     color: rgb(214, 50, 50);
+}
+
+.admin-panel {
+    color: #FF8500;
 }

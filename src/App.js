@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -30,7 +30,13 @@ import DetailWebDevelopment from './pages/admin/web-development/Detail';
 import UpdateWebDevelopment from './pages/admin/web-development/Update';
 
 function App() {
-    const isLogin = sessionStorage.getItem('isLogin');
+    const [isLogin, setIsLogin] = useState(!!sessionStorage.getItem('isLogin'));
+    useEffect(() => {
+        const handleStorageChange = () => setIsLogin(!!sessionStorage.getItem('isLogin'));
+        window.addEventListener('storage', handleStorageChange);
+        return () => window.removeEventListener('storage', handleStorageChange);
+    }, []);
+
     return (
         <Router>
             <Navbar />

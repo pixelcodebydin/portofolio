@@ -4,7 +4,7 @@ import './css/Home.css';
 import image from '../assets/image.jpg';
 import freepik from '../assets/freepik.png';
 import shutterstock from '../assets/shutterstock.png';
-import { Button, ButtonAction } from '../components/Button';
+import { Button } from '../components/Button';
 
 function Home() {
     useEffect(() => {
@@ -48,7 +48,7 @@ function Home() {
                 </div>
 
                 <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 mt-3">
-                    <img src={image} alt="Image" id="img"/>
+                    <img src={image} id="img"/>
                 </div>
             </div>
 

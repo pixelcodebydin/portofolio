@@ -5,8 +5,8 @@ import './css/Navbar.css';
 import { ConfirmAlert, SuccessAlert, FailedAlert } from '../components/Swal';
 
 function Navbar() {
-    const location = useLocation();
     const navigate = useNavigate();
+    const location = useLocation();
     const isLogin  = sessionStorage.getItem('isLogin');
     
     const handleLogout = async () => {
@@ -14,7 +14,8 @@ function Navbar() {
         if (isConfirmed) {
             try {
                 sessionStorage.removeItem('isLogin');
-                navigate('/login');
+                window.dispatchEvent(new Event('storage'));
+                navigate('/login', { replace: true });
                 SuccessAlert(`You have been logged out successfully.`);
             } catch (error) {
                 FailedAlert(`Failed to logout.`);
@@ -37,8 +38,10 @@ function Navbar() {
                     <li className={location.pathname === "/ui-ux-design" ? "active" : ""}><Link to="/ui-ux-design">UI/UX Design</Link></li>
                     <li className={location.pathname === "/photography" ? "active" : ""}><Link to="/photography">Photography</Link></li>
                     <li className={location.pathname === "/web-development" ? "active" : ""}><Link to="/web-development">Web Development</Link></li>
+                    
                     {isLogin && (
                         <li className="navbar-right">
+                            <Link to="/admin" className="admin-panel">Admin Panel</Link>
                             <a onClick={handleLogout} className="logout-item">Logout</a>
                         </li>
                     )}

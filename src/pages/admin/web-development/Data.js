@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Menu from '../../components/Menu';
-import { readWebDevelopment, updateStatusWebDevelopment, deleteWebDevelopment } from '../../api/WebDevelopment';
-import { ButtonAction } from '../../components/Button';
-import Pagination from '../../components/Pagination';
-import SearchBar from '../../components/SearchBar';
-import { ConfirmAlert, SuccessAlert, FailedAlert } from '../../components/Swal';
+import Menu from '../../../components/Menu';
+import { readWebDevelopment, updateStatusWebDevelopment, deleteWebDevelopment } from '../../../api/WebDevelopment';
+import { ButtonAction } from '../../../components/Button';
+import Pagination from '../../../components/Pagination';
+import SearchBar from '../../../components/SearchBar';
+import { ConfirmAlert, SuccessAlert, FailedAlert } from '../../../components/Swal';
 
 function AdminWebDevelopment() {
     const [webDevelopment, setWebDevelopment] = useState([]);

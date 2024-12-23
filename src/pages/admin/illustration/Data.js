@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Menu from '../../components/Menu';
-import { readIllustration, updateStatusIllustration, deleteIllustration } from '../../api/Illustration';
-import { ButtonAction } from '../../components/Button';
-import Pagination from '../../components/Pagination';
-import SearchBar from '../../components/SearchBar';
-import { ConfirmAlert, SuccessAlert, FailedAlert } from '../../components/Swal';
+import Menu from '../../../components/Menu';
+import { readIllustration, updateStatusIllustration, deleteIllustration } from '../../../api/Illustration';
+import { ButtonAction } from '../../../components/Button';
+import Pagination from '../../../components/Pagination';
+import SearchBar from '../../../components/SearchBar';
+import { ConfirmAlert, SuccessAlert, FailedAlert } from '../../../components/Swal';
 
 function AdminIllustration() {
     const [illustration, setIllustration] = useState([]);

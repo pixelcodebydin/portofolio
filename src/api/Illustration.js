@@ -21,12 +21,32 @@ export const readIllustrationCategory = async (id) => {
     }
 };
 
+export const readIllustrationActiveCategory = async () => {
+    try {
+        const response = await axios.get(`${API_URL}/ilustrasi/aktif`);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching illustration active categories:', error);
+        throw error;
+    }
+};
+
 export const readIllustrationFile = async (id) => {
     try {
         const response = await axios.get(`${API_URL}/ilustrasi/file/${id}`);
         return response.data;
     } catch (error) {
         console.error('Error fetching illustration files:', error);
+        throw error;
+    }
+};
+
+export const readIllustrationActiveFile = async (id) => {
+    try {
+        const response = await axios.get(`${API_URL}/ilustrasi/file-aktif/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching illustration active files:', error);
         throw error;
     }
 };

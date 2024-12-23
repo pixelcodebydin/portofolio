@@ -1,9 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from '../components/Button';
+import { readPhotographyActive } from '../api/Photography';
 
 function Photography() {
+    const [photography, setPhotography] = useState([]);
     useEffect(() => {
-        document.title = 'Photography - PixelCode by Din';
+        document.title = 'Photography - Admin Panel';
+        const getPhotography = async () => {
+            try {
+                const data = await readPhotographyActive();
+                setPhotography(data);
+            } catch (error) {
+                console.error('Failed to fetch photos:', error);
+            }
+        };
+        getPhotography();
     }, []);
 
     return (
@@ -17,61 +28,11 @@ function Photography() {
             <hr id="line" className="mb-3"></hr>
 
             <div className="row pt-4 pb-5">
-                <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-xs-12 mt-4">
-                    <img src="/image/photography/Photo - 1.jpg" className="d-block" id="photo" />
-                </div>
-
-                <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-xs-12 mt-4">
-                    <img src="/image/photography/Photo - 2.jpg" className="d-block" id="photo" />
-                </div>
-
-                <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-xs-12 mt-4">
-                    <img src="/image/photography/Photo - 3.jpg" className="d-block" id="photo" />
-                </div>
-
-                <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-xs-12 mt-4">
-                    <img src="/image/photography/Photo - 4.jpg" className="d-block" id="photo" />
-                </div>
-
-                <div className="col-xl-2 col-lg-2 col-md-6 col-sm-12 col-xs-12 mt-4">
-                    <img src="/image/photography/Photo - 5.jpg" className="d-block" id="photo" />
-                </div>
-
-                <div className="col-xl-2 col-lg-2 col-md-6 col-sm-12 col-xs-12 mt-4">
-                    <img src="/image/photography/Photo - 6.jpg" className="d-block" id="photo" />
-                </div>
-
-                <div className="col-xl-2 col-lg-2 col-md-6 col-sm-12 col-xs-12 mt-4">
-                    <img src="/image/photography/Photo - 7.jpg" className="d-block" id="photo" />
-                </div>
-
-                <div className="col-xl-2 col-lg-2 col-md-6 col-sm-12 col-xs-12 mt-4">
-                    <img src="/image/photography/Photo - 8.jpg" className="d-block" id="photo" />
-                </div>
-
-                <div className="col-xl-2 col-lg-2 col-md-6 col-sm-12 col-xs-12 mt-4">
-                    <img src="/image/photography/Photo - 9.jpg" className="d-block" id="photo" />
-                </div>
-
-                <div className="col-xl-2 col-lg-2 col-md-6 col-sm-12 col-xs-12 mt-4">
-                    <img src="/image/photography/Photo - 10.jpg" className="d-block" id="photo" />
-                </div>
-
-                <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-xs-12 mt-4">
-                    <img src="/image/photography/Photo - 11.jpg" className="d-block" id="photo" />
-                </div>
-
-                <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-xs-12 mt-4">
-                    <img src="/image/photography/Photo - 12.jpg" className="d-block" id="photo" />
-                </div>
-
-                <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-xs-12 mt-4">
-                    <img src="/image/photography/Photo - 13.jpg" className="d-block" id="photo" />
-                </div>
-
-                <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-xs-12 mt-4">
-                    <img src="/image/photography/Photo - 14.jpg" className="d-block" id="photo" />
-                </div>
+                {photography.map((item, index) => (
+                    <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-xs-12 mt-4">
+                        <img src={`/image/photography/${item.file_photography}`} className="d-block" style={{height: '15rem', width: '15rem', maxWidth: '100%', maxHeight: '100%', borderRadius: '0.5rem', objectFit: 'cover'}} />
+                    </div>
+                ))}
             </div>
         </div>
     );

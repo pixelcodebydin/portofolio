@@ -763,13 +763,12 @@ app.get('/api/photography', (req, res) => {
     });
 });
 
-app.get('/api/photography/aktif/:id', (req, res) => {
-    const { id } = req.params;
-    const query = `SELECT * FROM tbl_photography WHERE id_photography = ? AND status_photography = 1`;
-    db.query(query, [id], (err, results) => {
+app.get('/api/photography/aktif', (req, res) => {
+    const query = `SELECT * FROM tbl_photography WHERE status_photography = 1`;
+    db.query(query, (err, results) => {
         if (err) {
-            console.error(`Error fetching photo with ID ${id}:`, err.message);
-            res.status(500).send({ error: `Failed to fetch photo with ID ${id}.` });
+            console.error(`Error fetching photos:`, err.message);
+            res.status(500).send({ error: `Failed to fetch photos.` });
             return;
         }
         res.json(results);

@@ -21,12 +21,32 @@ export const readUiuxDesignCategory = async (id) => {
     }
 };
 
+export const readUiuxDesignActiveCategory = async () => {
+    try {
+        const response = await axios.get(`${API_URL}/ui-ux-design/aktif`);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching UI/UX design active categories:', error);
+        throw error;
+    }
+};
+
 export const readUiuxDesignFile = async (id) => {
     try {
         const response = await axios.get(`${API_URL}/ui-ux-design/file/${id}`);
         return response.data;
     } catch (error) {
         console.error('Error fetching UI/UX design files:', error);
+        throw error;
+    }
+};
+
+export const readUiuxDesignActiveFile = async (id) => {
+    try {
+        const response = await axios.get(`${API_URL}/ui-ux-design/file-aktif/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching UI/UX design active files:', error);
         throw error;
     }
 };

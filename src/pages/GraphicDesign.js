@@ -1,10 +1,30 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './css/Carousel.css';
 import { Button } from '../components/Button';
+import { readGraphicDesignActiveCategory, readGraphicDesignActiveFile } from '../api/GraphicDesign';
 
 function GraphicDesign() {
+    const [graphicDesign, setGraphicDesign] = useState([]);
+    const [files, setFiles] = useState({});
+
     useEffect(() => {
-        document.title = 'Graphic Design - PixelCode by Din';
+        document.title = 'Graphic Design - Admin Panel';
+        const getGraphicDesign = async () => {
+            try {
+                const data = await readGraphicDesignActiveCategory();
+                setGraphicDesign(data);
+
+                const filesData = {};
+                for (const category of data) {
+                    const fileData = await readGraphicDesignActiveFile(category.id_graphic_design);
+                    filesData[category.id_graphic_design] = fileData;
+                }
+                setFiles(filesData);
+            } catch (error) {
+                console.error('Failed to fetch categories:', error);
+            }
+        };
+        getGraphicDesign();
     }, []);
 
     return (
@@ -14,195 +34,46 @@ function GraphicDesign() {
                 <p className="text-center">As a skilled graphic designer, I specialize in creating impactful visuals, including logos, social media content, stationery, twibbons, and more. With a focus on aesthetics and functionality, I bring your ideas to life, delivering designs that capture attention and leave a lasting impression.</p>
             </div>
 
-            <hr id="line" className="mb-3"></hr>
-
-            <div className="row pt-4 pb-5">
-                <div className="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-xs-12 mt-4" id="desc">
-                    <h3>Logo Design</h3>
-                    <p>Explore my collection of logo designs and branding projects that capture the essence of each client’s vision. From startups to established businesses, my designs focus on creating strong, recognizable brand identities that leave a lasting impression.</p>
-                    <a href="https://drive.google.com/drive/folders/1_P8w6Ak6JnUpHMC8CZMCkKyJgt4iAWRS?usp=drive_link" target="_blank" rel="noopener noreferrer"><Button desc="See more →" id="button-1" /></a>
-                </div>
-
-                <div className="col-xl-7 col-lg-7 col-md-12 col-sm-12 col-xs-12 mt-4">
-                    <div id="carousel-1" className="carousel slide" data-bs-ride="carousel">
-                        <div className="carousel-inner">
-                            <div className="carousel-item active">
-                                <img src="/image/graphic-design/Logo - 1.jpg" className="d-block" alt="Slide 1" id="slide" />
-                            </div>
-
-                            <div className="carousel-item">
-                                <img src="/image/graphic-design/Logo - 2.jpg" className="d-block" alt="Slide 2" id="slide" />
-                            </div>
-
-                            <div className="carousel-item">
-                                <img src="/image/graphic-design/Logo - 3.jpg" className="d-block" alt="Slide 3" id="slide" />
-                            </div>
+            {graphicDesign.map((item, index) => (
+                <div key={index}>
+                    <hr id="line" className="mb-3" />
+                    <div className="row pt-4 pb-5">
+                        <div className="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-xs-12 mt-4" id="desc">
+                            <h3>{item.kategori_graphic_design}</h3>
+                            <p>{item.deskripsi_graphic_design}</p>
+                            <a href={item.link_graphic_design} target="_blank" rel="noopener noreferrer"><Button desc="See more →" id="button-1" /></a>
                         </div>
 
-                        <button className="carousel-control-prev" type="button" data-bs-target="#carousel-1" data-bs-slide="prev">
-                            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span className="visually-hidden">Previous</span>
-                        </button>
+                        <div className="col-xl-7 col-lg-7 col-md-12 col-sm-12 col-xs-12 mt-4">
+                            <div id={`carousel-${index}`} className="carousel slide" data-bs-ride="carousel">
+                                <div className="carousel-inner">
+                                    {files[item.id_graphic_design] && files[item.id_graphic_design].length > 0 ? (
+                                        files[item.id_graphic_design].map((file, fileIndex) => (
+                                            <div className={`carousel-item ${fileIndex === 0 ? 'active' : ''}`} key={file.id_file_graphic_design}>
+                                                <img src={`/image/graphic-design/${file.file_graphic_design}`} className="d-block" id="slide" />
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <div className="carousel-item active">
+                                            <p className="text-center">No images available</p>
+                                        </div>
+                                    )}
+                                </div>
 
-                        <button className="carousel-control-next" type="button" data-bs-target="#carousel-1" data-bs-slide="next">
-                            <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span className="visually-hidden">Next</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
+                                <button className="carousel-control-prev" type="button" data-bs-target={`#carousel-${index}`} data-bs-slide="prev">
+                                    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span className="visually-hidden">Previous</span>
+                                </button>
 
-            <hr id="line" className="mb-2"></hr>
-
-            <div className="row pt-4 pb-5">
-                <div className="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-xs-12 mt-4" id="desc">
-                    <h3>Social Media Content</h3>
-                    <p>Explore my portfolio of social media content design created for educational and community organizations like MAN 2 Model Medan, PEMA Fasilom-TI, and Rumah Izin. These posts are designed to reflect the values and missions of each organization, fostering community engagement.</p>
-                    <a href="https://drive.google.com/drive/folders/1kccMlhMNmr3262uKcVyhdfDaKbsRfBho?usp=drive_link" target="_blank" rel="noopener noreferrer"><Button desc="See more →" id="button-1" /></a>
-                </div>
-
-                <div className="col-xl-7 col-lg-7 col-md-12 col-sm-12 col-xs-12 mt-4">
-                    <div id="carousel-2" className="carousel slide" data-bs-ride="carousel">
-                        <div className="carousel-inner">
-                            <div className="carousel-item active">
-                                <img src="/image/graphic-design/Instagram - 1.jpg" className="d-block" alt="Slide 1" id="slide" />
-                            </div>
-
-                            <div className="carousel-item">
-                                <img src="/image/graphic-design/Instagram - 2.jpg" className="d-block" alt="Slide 2" id="slide" />
-                            </div>
-
-                            <div className="carousel-item">
-                                <img src="/image/graphic-design/Instagram - 3.jpg" className="d-block" alt="Slide 3" id="slide" />
+                                <button className="carousel-control-next" type="button" data-bs-target={`#carousel-${index}`} data-bs-slide="next">
+                                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span className="visually-hidden">Next</span>
+                                </button>
                             </div>
                         </div>
-
-                        <button className="carousel-control-prev" type="button" data-bs-target="#carousel-2" data-bs-slide="prev">
-                            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span className="visually-hidden">Previous</span>
-                        </button>
-
-                        <button className="carousel-control-next" type="button" data-bs-target="#carousel-2" data-bs-slide="next">
-                            <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span className="visually-hidden">Next</span>
-                        </button>
                     </div>
                 </div>
-            </div>
-
-            <hr id="line" className="mb-2"></hr>
-
-            <div className="row pt-4 pb-5">
-                <div className="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-xs-12 mt-4" id="desc">
-                    <h3>Twibbon</h3>
-                    <p>Explore a collection of custom twibbon designs tailored to enhance social media events. My designs combine aesthetic appeal with strong messaging to help you achieve your engagement goals.</p>
-                    <a href="https://drive.google.com/drive/folders/13bML_DLxHab-rlmWmzPHepwD6hC12jc4?usp=drive_link" target="_blank" rel="noopener noreferrer"><Button desc="See more →" id="button-1" /></a>
-                </div>
-
-                <div className="col-xl-7 col-lg-7 col-md-12 col-sm-12 col-xs-12 mt-4">
-                    <div id="carousel-3" className="carousel slide" data-bs-ride="carousel">
-                        <div className="carousel-inner">
-                            <div className="carousel-item active">
-                                <img src="/image/graphic-design/Twibbon - 1.jpg" className="d-block" alt="Slide 1" id="slide" />
-                            </div>
-
-                            <div className="carousel-item">
-                                <img src="/image/graphic-design/Twibbon - 2.jpg" className="d-block" alt="Slide 2" id="slide" />
-                            </div>
-
-                            <div className="carousel-item">
-                                <img src="/image/graphic-design/Twibbon - 3.jpg" className="d-block" alt="Slide 3" id="slide" />
-                            </div>
-                        </div>
-
-                        <button className="carousel-control-prev" type="button" data-bs-target="#carousel-3" data-bs-slide="prev">
-                            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span className="visually-hidden">Previous</span>
-                        </button>
-
-                        <button className="carousel-control-next" type="button" data-bs-target="#carousel-3" data-bs-slide="next">
-                            <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span className="visually-hidden">Next</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <hr id="line" className="mb-2"></hr>
-
-            <div className="row pt-4 pb-5">
-                <div className="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-xs-12 mt-4" id="desc">
-                    <h3>YouTube Thumbnail</h3>
-                    <p>Experienced in designing custom YouTube thumbnails that stand out in the crowded video landscape. Utilizing bold visuals and compelling text, my thumbnails help videos attract more viewers and convey the essence of the content effectively.</p>
-                    <a href="https://drive.google.com/drive/folders/1agWYjiQy2Sb7zDvICi3mLwJFfUIUieX5?usp=drive_link" target="_blank" rel="noopener noreferrer"><Button desc="See more →" id="button-1" /></a>
-                </div>
-
-                <div className="col-xl-7 col-lg-7 col-md-12 col-sm-12 col-xs-12 mt-4">
-                    <div id="carousel-4" className="carousel slide" data-bs-ride="carousel">
-                        <div className="carousel-inner">
-                            <div className="carousel-item active">
-                                <img src="/image/graphic-design/Thumbnail - 1.jpg" className="d-block" alt="Slide 1" id="slide" />
-                            </div>
-
-                            <div className="carousel-item">
-                                <img src="/image/graphic-design/Thumbnail - 2.jpg" className="d-block" alt="Slide 2" id="slide" />
-                            </div>
-
-                            <div className="carousel-item">
-                                <img src="/image/graphic-design/Thumbnail - 3.jpg" className="d-block" alt="Slide 3" id="slide" />
-                            </div>
-                        </div>
-
-                        <button className="carousel-control-prev" type="button" data-bs-target="#carousel-4" data-bs-slide="prev">
-                            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span className="visually-hidden">Previous</span>
-                        </button>
-
-                        <button className="carousel-control-next" type="button" data-bs-target="#carousel-4" data-bs-slide="next">
-                            <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span className="visually-hidden">Next</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <hr id="line" className="mb-2"></hr>
-
-            <div className="row pt-4 pb-5">
-                <div className="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-xs-12 mt-4" id="desc">
-                    <h3>Other</h3>
-                    <p>My graphic design portfolio features a wide array of projects, including stationery, banner, brochure, and the others. I combine creativity with a professional touch to produce designs that not only look great but also serve their intended purpose effectively.</p>
-                    <a href="https://drive.google.com/drive/folders/1EqPDfKdJtAlsqt2fWyIYTUrLZeKlZHrO?usp=drive_link" target="_blank" rel="noopener noreferrer"><Button desc="See more →" id="button-1" /></a>
-                </div>
-
-                <div className="col-xl-7 col-lg-7 col-md-12 col-sm-12 col-xs-12 mt-4">
-                    <div id="carousel-5" className="carousel slide" data-bs-ride="carousel">
-                        <div className="carousel-inner">
-                            <div className="carousel-item active">
-                                <img src="/image/graphic-design/Other - 1.jpg" className="d-block" alt="Slide 1" id="slide" />
-                            </div>
-
-                            <div className="carousel-item">
-                                <img src="/image/graphic-design/Other - 2.jpg" className="d-block" alt="Slide 2" id="slide" />
-                            </div>
-
-                            <div className="carousel-item">
-                                <img src="/image/graphic-design/Other - 3.jpg" className="d-block" alt="Slide 3" id="slide" />
-                            </div>
-                        </div>
-
-                        <button className="carousel-control-prev" type="button" data-bs-target="#carousel-5" data-bs-slide="prev">
-                            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span className="visually-hidden">Previous</span>
-                        </button>
-
-                        <button className="carousel-control-next" type="button" data-bs-target="#carousel-5" data-bs-slide="next">
-                            <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span className="visually-hidden">Next</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
+            ))}
         </div>
     );
 }

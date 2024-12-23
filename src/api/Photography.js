@@ -11,6 +11,16 @@ export const readPhotography = async () => {
     }
 };
 
+export const readPhotographyActive = async () => {
+    try {
+        const response = await axios.get(`${API_URL}/photography/aktif`);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching photos:', error);
+        throw error;
+    }
+};
+
 export const updateStatusPhotography = async (id, status) => {
     try {
         const response = await axios.put(`${API_URL}/photography/${id}/${status}`);

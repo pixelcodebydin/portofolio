@@ -21,12 +21,32 @@ export const readGraphicDesignCategory = async (id) => {
     }
 };
 
+export const readGraphicDesignActiveCategory = async () => {
+    try {
+        const response = await axios.get(`${API_URL}/graphic-design/aktif`);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching graphic design active categories:', error);
+        throw error;
+    }
+};
+
 export const readGraphicDesignFile = async (id) => {
     try {
         const response = await axios.get(`${API_URL}/graphic-design/file/${id}`);
         return response.data;
     } catch (error) {
         console.error('Error fetching graphic design files:', error);
+        throw error;
+    }
+};
+
+export const readGraphicDesignActiveFile = async (id) => {
+    try {
+        const response = await axios.get(`${API_URL}/graphic-design/file-aktif/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching graphic design active files:', error);
         throw error;
     }
 };

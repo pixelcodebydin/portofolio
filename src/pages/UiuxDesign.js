@@ -1,9 +1,30 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import './css/Carousel.css';
 import { Button } from '../components/Button';
+import { readUiuxDesignActiveCategory, readUiuxDesignActiveFile } from '../api/UiuxDesign';
 
 function UiuxDesign() {
+    const [uiuxDesign, setUiuxDesign] = useState([]);
+    const [files, setFiles] = useState({});
+
     useEffect(() => {
-        document.title = 'UI/UX Design - PixelCode by Din';
+        document.title = 'UI/UX Design - Admin Panel';
+        const getUiuxDesign = async () => {
+            try {
+                const data = await readUiuxDesignActiveCategory();
+                setUiuxDesign(data);
+
+                const filesData = {};
+                for (const category of data) {
+                    const fileData = await readUiuxDesignActiveFile(category.id_ui_ux_design);
+                    filesData[category.id_ui_ux_design] = fileData;
+                }
+                setFiles(filesData);
+            } catch (error) {
+                console.error('Failed to fetch categories:', error);
+            }
+        };
+        getUiuxDesign();
     }, []);
 
     return (
@@ -13,81 +34,46 @@ function UiuxDesign() {
                 <p className="text-center">I specialize in creating intuitive and visually engaging UI/UX designs for both web and mobile applications. My focus is on crafting user-centered solutions that enhance usability while delivering modern, clean aesthetics.</p>
             </div>
 
-            <hr id="line" className="mb-3"></hr>
-
-            <div className="row pt-4 pb-5">
-                <div className="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-xs-12 mt-4" id="desc">
-                    <h3>Web Design</h3>
-                    <p>Highlighting a range of web designs crafted according to detailed client briefs. Each design is a testament to my commitment to translating client ideas into visually compelling and user-friendly websites.</p>
-                    <a href="https://drive.google.com/drive/folders/1wQ_UpaKtWixyiWXsj85OaDuRe7aZusA1?usp=drive_link" target="_blank" rel="noopener noreferrer"><Button desc="See more →" id="button-1" /></a>
-                </div>
-
-                <div className="col-xl-7 col-lg-7 col-md-12 col-sm-12 col-xs-12 mt-4">
-                    <div id="carousel-1" className="carousel slide" data-bs-ride="carousel">
-                        <div className="carousel-inner">
-                            <div className="carousel-item active">
-                                <img src="/image/ui-ux-design/Web - 1.jpg" className="d-block" style={{ maxWidth: '100%', maxHeight: '27rem', width: 'auto', height: 'auto', margin: 'auto' }} alt="Slide 1" id="slide" />
-                            </div>
-
-                            <div className="carousel-item">
-                                <img src="/image/ui-ux-design/Web - 2.jpg" className="d-block" style={{ maxWidth: '100%', maxHeight: '27rem', width: 'auto', height: 'auto', margin: 'auto' }} alt="Slide 2" id="slide" />
-                            </div>
-
-                            <div className="carousel-item">
-                                <img src="/image/ui-ux-design/Web - 3.jpg" className="d-block" style={{ maxWidth: '100%', maxHeight: '27rem', width: 'auto', height: 'auto', margin: 'auto' }} alt="Slide 3" id="slide" />
-                            </div>
+            {uiuxDesign.map((item, index) => (
+                <div key={index}>
+                    <hr id="line" className="mb-3" />
+                    <div className="row pt-4 pb-5">
+                        <div className="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-xs-12 mt-4" id="desc">
+                            <h3>{item.kategori_ui_ux_design}</h3>
+                            <p>{item.deskripsi_ui_ux_design}</p>
+                            <a href={item.link_ui_ux_design} target="_blank" rel="noopener noreferrer"><Button desc="See more →" id="button-1" /></a>
                         </div>
 
-                        <button className="carousel-control-prev" type="button" data-bs-target="#carousel-1" data-bs-slide="prev">
-                            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span className="visually-hidden">Previous</span>
-                        </button>
+                        <div className="col-xl-7 col-lg-7 col-md-12 col-sm-12 col-xs-12 mt-4">
+                            <div id={`carousel-${index}`} className="carousel slide" data-bs-ride="carousel">
+                                <div className="carousel-inner">
+                                    {files[item.id_ui_ux_design] && files[item.id_ui_ux_design].length > 0 ? (
+                                        files[item.id_ui_ux_design].map((file, fileIndex) => (
+                                            <div className={`carousel-item ${fileIndex === 0 ? 'active' : ''}`} key={file.id_file_ui_ux_design}>
+                                                <img src={`/image/ui-ux-design/${file.file_ui_ux_design}`} className="d-block" id="slide" />
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <div className="carousel-item active">
+                                            <p className="text-center">No images available</p>
+                                        </div>
+                                    )}
+                                </div>
 
-                        <button className="carousel-control-next" type="button" data-bs-target="#carousel-1" data-bs-slide="next">
-                            <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span className="visually-hidden">Next</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
+                                <button className="carousel-control-prev" type="button" data-bs-target={`#carousel-${index}`} data-bs-slide="prev">
+                                    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span className="visually-hidden">Previous</span>
+                                </button>
 
-            <hr id="line" className="mb-2"></hr>
-
-            <div className="row pt-4 pb-5">
-                <div className="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-xs-12 mt-4" id="desc">
-                    <h3>Mobile App Design</h3>
-                    <p>Browse through my mobile app design projects where functionality meets style. Each design is meticulously crafted to provide a visually appealing and user-friendly experience, enhancing overall app performance.</p>
-                    <a href="https://drive.google.com/drive/folders/18k6HukApHcGJ9gWvkJqY0AmTJdobNydc?usp=drive_link" target="_blank" rel="noopener noreferrer"><Button desc="See more →" id="button-1" /></a>
-                </div>
-
-                <div className="col-xl-7 col-lg-7 col-md-12 col-sm-12 col-xs-12 mt-4">
-                    <div id="carousel-2" className="carousel slide" data-bs-ride="carousel">
-                        <div className="carousel-inner">
-                            <div className="carousel-item active">
-                                <img src="/image/ui-ux-design/Mobile - 1.jpg" className="d-block" style={{ maxWidth: '100%', maxHeight: '27rem', width: 'auto', height: 'auto', margin: 'auto' }} alt="Slide 1" id="slide" />
-                            </div>
-
-                            <div className="carousel-item">
-                                <img src="/image/ui-ux-design/Mobile - 2.jpg" className="d-block" style={{ maxWidth: '100%', maxHeight: '27rem', width: 'auto', height: 'auto', margin: 'auto' }} alt="Slide 2" id="slide" />
-                            </div>
-
-                            <div className="carousel-item">
-                                <img src="/image/ui-ux-design/Mobile - 3.jpg" className="d-block" style={{ maxWidth: '100%', maxHeight: '27rem', width: 'auto', height: 'auto', margin: 'auto' }} alt="Slide 3" id="slide" />
+                                <button className="carousel-control-next" type="button" data-bs-target={`#carousel-${index}`} data-bs-slide="next">
+                                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span className="visually-hidden">Next</span>
+                                </button>
                             </div>
                         </div>
-
-                        <button className="carousel-control-prev" type="button" data-bs-target="#carousel-2" data-bs-slide="prev">
-                            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span className="visually-hidden">Previous</span>
-                        </button>
-
-                        <button className="carousel-control-next" type="button" data-bs-target="#carousel-2" data-bs-slide="next">
-                            <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span className="visually-hidden">Next</span>
-                        </button>
                     </div>
                 </div>
-            </div>
+            ))}
         </div>
     );
 }

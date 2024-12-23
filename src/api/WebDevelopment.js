@@ -21,12 +21,32 @@ export const readWebDevelopmentCategory = async (id) => {
     }
 };
 
+export const readWebDevelopmentActiveCategory = async () => {
+    try {
+        const response = await axios.get(`${API_URL}/web-development/aktif`);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching web development active projects:', error);
+        throw error;
+    }
+};
+
 export const readWebDevelopmentFile = async (id) => {
     try {
         const response = await axios.get(`${API_URL}/web-development/file/${id}`);
         return response.data;
     } catch (error) {
         console.error('Error fetching website development files:', error);
+        throw error;
+    }
+};
+
+export const readWebDevelopmentActiveFile = async (id) => {
+    try {
+        const response = await axios.get(`${API_URL}/web-development/file-aktif/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching web development active files:', error);
         throw error;
     }
 };

@@ -92,7 +92,6 @@ app.get('/api/count', (req, res) => {
     });
 });
 
-
 app.get('/api/komentar', (req, res) => {
     const query = 'SELECT * FROM tbl_komentar';
     db.query(query, (err, results) => {
@@ -102,6 +101,40 @@ app.get('/api/komentar', (req, res) => {
             return;
         }
         res.json(results);
+    });
+});
+
+app.get('/api/komentar/:page', (req, res) => {
+    const { page } = req.params;
+    const query = 'SELECT * FROM tbl_komentar WHERE halaman_komentar = ? AND status_komentar = 1';
+    db.query(query, [page], (err, results) => {
+        if (err) {
+            console.error('Error fetching comments:', err.message);
+            res.status(500).send({ error: 'Failed to fetch comments.' });
+            return;
+        }
+        res.json(results);
+    });
+});
+
+app.post('/api/komentar/tambah/:page', (req, res) => {
+    const { page } = req.params;
+    const { nama_komentar, isi_komentar } = req.body;
+    if (!nama_komentar || !isi_komentar) {
+        return res.status(400).json({ error: 'All fields are required' });
+    }
+
+    const query = `
+        INSERT INTO tbl_komentar (nama_komentar, isi_komentar, halaman_komentar, waktu_komentar, status_komentar)
+        VALUES (?, ?, ?, NOW(), 1)
+    `;
+
+    db.query(query, [nama_komentar, isi_komentar, page], (err, result) => {
+        if (err) {
+            console.error('Error inserting data:', err);
+            return res.status(500).json({ error: 'Failed to insert data' });
+        }
+        res.status(201).json({ message: 'Comment added successfully', id: result.insertId });
     });
 });
 

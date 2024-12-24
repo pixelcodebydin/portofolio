@@ -30,8 +30,8 @@ function Navbar() {
                 <span className="navbar-toggler-icon"></span>
             </button>
 
-            <div className="collapse navbar-collapse">
-                <ul>
+            <div className="collapse navbar-collapse" id="navbarNav">
+                <ul className="navbar-nav ms-auto">
                     <li className={location.pathname === "/" ? "active" : ""}><Link to="/">Home</Link></li>
                     <li className={location.pathname === "/graphic-design" ? "active" : ""}><Link to="/graphic-design">Graphic Design</Link></li>
                     <li className={location.pathname === "/illustration" ? "active" : ""}><Link to="/illustration">Illustration</Link></li>

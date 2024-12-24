@@ -82,7 +82,6 @@ app.get('/api/count', (req, res) => {
             return res.status(500).json({ error: 'Database query error' });
         }
 
-        // Transform the result into an object
         const results = rows.reduce((acc, row) => {
             acc[row.category] = row.count;
             return acc;

@@ -12,14 +12,15 @@ function Login() {
     const [password, setPassword] = useState('');
     const navigate                = useNavigate();
     const Email                   = 'admin@admin.com';
-    const Password                = 'Admin12345*';
-
+    const Password                = 'Admin12345';
+    
     const handleSubmit = (e) => {
         e.preventDefault();
         if (email === Email && password === Password) {
             sessionStorage.setItem('isLogin', true);
+            window.dispatchEvent(new Event('storage'));
             SuccessAlert('Welcome, Admin!');
-            navigate('/');
+            navigate('/admin');
         } else {
             FailedAlert("You've entered an incorrect email/password.");
         }

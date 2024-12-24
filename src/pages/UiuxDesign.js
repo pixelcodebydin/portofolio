@@ -28,9 +28,9 @@ function UiuxDesign() {
         console.log(formData);
 
         try {
-            await addComment('UI/UX Design', formData);
+            await addComment('UI UX Design', formData);
             SuccessAlert('Comment added successfully!');
-            navigate('/graphic-design');
+            navigate('/ui-ux-design');
             setFormData({ nama_komentar: '', isi_komentar: '' });
         } catch (error) {
             FailedAlert('Failed to add comment. Please try again.');
@@ -40,7 +40,7 @@ function UiuxDesign() {
     useEffect(() => {
         const getComment = async () => {
             try {
-                const data = await readCommentPage('UI/UX Design');
+                const data = await readCommentPage('UI UX Design');
                 setComment(data);
             } catch (error) {
                 console.error('Failed to fetch comments:', error);

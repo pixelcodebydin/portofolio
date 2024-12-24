@@ -30,7 +30,7 @@ function WebDevelopment() {
         try {
             await addComment('Web Development', formData);
             SuccessAlert('Comment added successfully!');
-            navigate('/graphic-design');
+            navigate('/web-development');
             setFormData({ nama_komentar: '', isi_komentar: '' });
         } catch (error) {
             FailedAlert('Failed to add comment. Please try again.');
@@ -82,7 +82,7 @@ function WebDevelopment() {
                     <hr id="line" className="mb-3" />
                     <div className="row pt-4 pb-5">
                         <div className="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-xs-12 mt-4" id="desc">
-                            <h3>{item.kategori_web_development}</h3>
+                            <h3>{item.judul_web_development}</h3>
                             <p>{item.deskripsi_web_development}</p>
                             <a href={item.link_web_development} target="_blank" rel="noopener noreferrer"><Button desc="See more →" id="button-1" /></a>
                         </div>

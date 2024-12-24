@@ -28,7 +28,7 @@ function Photography() {
         try {
             await addComment('Photography', formData);
             SuccessAlert('Comment added successfully!');
-            navigate('/graphic-design');
+            navigate('/photography');
             setFormData({ nama_komentar: '', isi_komentar: '' });
         } catch (error) {
             FailedAlert('Failed to add comment. Please try again.');

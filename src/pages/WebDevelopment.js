@@ -50,7 +50,7 @@ function WebDevelopment() {
     }, []);
 
     useEffect(() => {
-        document.title = 'Web Development - Admin Panel';
+        document.title = 'Web Development - PixelCode by Din';
         const getWebDevelopment = async () => {
             try {
                 const data = await readWebDevelopmentActiveCategory();

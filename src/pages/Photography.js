@@ -48,7 +48,7 @@ function Photography() {
     }, []);
 
     useEffect(() => {
-        document.title = 'Photography - Admin Panel';
+        document.title = 'Photography - PixelCode by Din';
         const getPhotography = async () => {
             try {
                 const data = await readPhotographyActive();

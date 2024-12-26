@@ -50,7 +50,7 @@ function Illustration() {
     }, []);
 
     useEffect(() => {
-        document.title = 'Illustration - Admin Panel';
+        document.title = 'Illustration - PixelCode by Din';
         const getIllustration = async () => {
             try {
                 const data = await readIllustrationActiveCategory();

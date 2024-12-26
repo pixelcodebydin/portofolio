@@ -50,7 +50,7 @@ function UiuxDesign() {
     }, []);
 
     useEffect(() => {
-        document.title = 'UI/UX Design - Admin Panel';
+        document.title = 'UI/UX Design - PixelCode by Din';
         const getUiuxDesign = async () => {
             try {
                 const data = await readUiuxDesignActiveCategory();

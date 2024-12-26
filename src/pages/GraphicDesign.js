@@ -50,7 +50,7 @@ function GraphicDesign() {
     }, []);
 
     useEffect(() => {
-        document.title = 'Graphic Design - Admin Panel';
+        document.title = 'Graphic Design - PixelCode by Din';
         const getGraphicDesign = async () => {
             try {
                 const data = await readGraphicDesignActiveCategory();

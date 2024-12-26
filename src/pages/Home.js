@@ -19,7 +19,7 @@ function Home() {
     });
 
     useEffect(() => {
-        document.title = 'Home - Admin Panel';
+        document.title = 'Home - PixelCode by Din';
         const getComment = async () => {
             try {
                 const data = await readCommentPage('Home');
